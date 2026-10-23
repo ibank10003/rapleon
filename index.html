@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>무료 자산관리 상담 | 주유장 라이프플랜연구소</title>
+<meta name="description" content="보험·연금·투자·부동산·세금까지, 흩어진 내 자산을 한 번에 무료로 점검해 드립니다.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6f8;
+    --text: #17191c;
+    --text-sub: #5b6470;
+    --line: #e3e7ec;
+    --brand: #1f6feb;
+    --brand-dark: #1557c0;
+    --accent: #ff5a36;
+    --ok: #12a150;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.65;
+    word-break: keep-all;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; }
+  section.soft { background: var(--bg-soft); }
+  h1, h2, h3 { line-height: 1.35; margin: 0 0 16px; }
+  h1 { font-size: 30px; font-weight: 800; }
+  h2 { font-size: 24px; font-weight: 800; }
+  h3 { font-size: 18px; font-weight: 700; }
+  p { margin: 0 0 14px; color: var(--text-sub); font-size: 17px; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 700; color: var(--brand);
+    background: #e8f0fe; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .hl { color: var(--accent); }
+  .btn {
+    display: block; width: 100%; text-align: center; border: 0; cursor: pointer;
+    background: var(--brand); color: #fff; font: inherit; font-size: 18px; font-weight: 700;
+    padding: 18px 20px; border-radius: var(--radius); text-decoration: none;
+  }
+  .btn:hover { background: var(--brand-dark); }
+  .btn[disabled] { opacity: .6; cursor: default; }
+  .hero { padding-top: 40px; }
+  .hero .sub { font-size: 18px; }
+  .seats {
+    display: flex; align-items: center; gap: 10px; margin: 20px 0;
+    padding: 14px 16px; border: 1px solid #ffd2c7; background: #fff4f1; border-radius: var(--radius);
+    font-weight: 700; color: #b8371a;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .list li {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 18px; font-size: 16px;
+  }
+  .list li b { display: block; font-size: 17px; margin-bottom: 4px; color: var(--text); }
+  .check li { padding-left: 48px; position: relative; }
+  .check li::before {
+    content: "✓"; position: absolute; left: 16px; top: 15px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--ok); color: #fff; font-size: 13px; font-weight: 800;
+    display: grid; place-items: center;
+  }
+  .steps { counter-reset: s; }
+  .steps li { padding-left: 56px; position: relative; }
+  .steps li::before {
+    counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px;
+    width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff;
+    font-weight: 800; font-size: 14px; display: grid; place-items: center;
+  }
+  .profile { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 50%; background: #dbe6f7 center/cover no-repeat;
+    flex: none; display: grid; place-items: center; font-size: 30px; font-weight: 800; color: var(--brand);
+  }
+  .profile .name { font-size: 20px; font-weight: 800; color: var(--text); margin: 0; }
+  .profile .role { font-size: 15px; margin: 0; }
+  .video { position: relative; padding-top: 56.25%; border-radius: var(--radius); overflow: hidden; background: #000; margin: 18px 0; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .review { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  .review p { color: var(--text); margin: 0 0 8px; }
+  .review span { font-size: 14px; color: var(--text-sub); }
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 700; font-size: 17px; cursor: pointer; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "Q. "; color: var(--brand); }
+  .faq details p { margin: 10px 0 0; font-size: 16px; }
+
+  /* 신청서 */
+  .form-card { background: #fff; border: 2px solid var(--brand); border-radius: 18px; padding: 24px 20px; }
+  .field { margin-bottom: 18px; }
+  .field > label, .field > .label { display: block; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  .req { color: var(--accent); }
+  input[type=text], input[type=tel], select {
+    width: 100%; font: inherit; font-size: 17px; padding: 14px; border: 1px solid #cfd6de;
+    border-radius: 10px; background: #fff; color: var(--text);
+  }
+  input:focus, select:focus { outline: 2px solid var(--brand); outline-offset: 1px; border-color: transparent; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label {
+    border: 1px solid #cfd6de; border-radius: 999px; padding: 9px 14px; font-size: 15px; cursor: pointer; user-select: none;
+  }
+  .chips input { position: absolute; opacity: 0; pointer-events: none; }
+  .chips label:has(input:checked) { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .consent { background: var(--bg-soft); border-radius: 10px; padding: 14px; font-size: 14px; color: var(--text-sub); }
+  .consent label { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--text); font-weight: 600; cursor: pointer; }
+  .consent input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; }
+  .consent details { margin-top: 8px; }
+  .consent summary { cursor: pointer; font-size: 13px; }
+  .consent table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .consent th, .consent td { border: 1px solid var(--line); padding: 6px; text-align: left; vertical-align: top; }
+  .err { color: #d0302f; font-size: 14px; margin-top: 6px; display: none; }
+  .field.invalid .err { display: block; }
+  .field.invalid input, .field.invalid select { border-color: #d0302f; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .done { display: none; text-align: center; padding: 20px 0; }
+  .done .big { font-size: 56px; }
+  .notice { font-size: 13px; color: var(--text-sub); margin-top: 14px; text-align: center; }
+
+  /* 하단 고정 버튼 */
+  .sticky {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.96); border-top: 1px solid var(--line); z-index: 10;
+    transition: transform .2s;
+  }
+  .sticky.hide { transform: translateY(110%); }
+  .sticky .btn { max-width: 528px; margin: 0 auto; }
+  footer { padding: 32px 0 120px; font-size: 13px; color: var(--text-sub); text-align: center; }
+  footer p { font-size: 13px; margin: 0 0 6px; }
+  .areas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 8px; }
+  .areas div {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px;
+    font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4;
+  }
+  .areas div small { display: block; font-weight: 500; color: var(--text-sub); font-size: 13px; margin-top: 2px; }
+  .test-banner { background: #fff3cd; color: #7a5b00; font-size: 13px; text-align: center; padding: 8px; display: none; }
+</style>
+
+<!-- Meta 픽셀: CONFIG.metaPixelId 를 넣으면 자동으로 켜집니다 (아래 스크립트 참고) -->
+</head>
+<body>
+<div class="test-banner" id="testBanner">테스트 모드: 구글 시트 주소가 아직 설정되지 않아 신청 내용이 저장되지 않습니다.</div>
+
+<!-- 1. 후킹 + 표본 -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow" data-c="brand">주유장 라이프플랜연구소</span>
+    <h1 id="heroTitle">보험, 연금, 투자, 부동산, 세금…<br><span class="hl">따로따로 물어보고</span><br>계시진 않나요?</h1>
+    <p class="sub" id="heroSub">흩어진 내 자산을 한 번에 모아 점검해 드립니다. 직장인부터 자영업자, 법인 대표님까지 <b>무료 자산관리 상담</b>을 받아보세요.</p>
+    <div class="seats"><span class="dot"></span><span>이번 주 무료 상담 가능 인원 <b data-c="seats">2</b>명 남음</span></div>
+    <a class="btn" href="#apply" id="heroCta">무료 자산관리 상담 신청하기</a>
+  </div>
+</section>
+
+<!-- 2. 문제점 제시 -->
+<section class="soft">
+  <div class="wrap">
+    <h2>열심히 모으는데,<br>왜 돈이 잘 안 불어날까요?</h2>
+    <ul class="list">
+      <li><b>자산이 여기저기 흩어져 있다</b>보험은 설계사에게, 적금은 은행에, 주식은 앱에. 전체 그림을 본 적이 없습니다</li>
+      <li><b>보험료가 생각보다 많이 나간다</b>소득 대비 보험료가 적정한지, 중복은 없는지 확인해본 적이 없습니다</li>
+      <li><b>노후·상속·세금 준비가 막막하다</b>연금은 얼마나 받을지, 자녀에게 물려줄 때 세금은 얼마인지 모릅니다</li>
+      <li><b>사업 자금과 대출이 늘 고민이다</b>자영업자·법인 대표님은 운영 자금, 대출, 절세까지 신경 쓸 게 너무 많습니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. 명확한 해결책 -->
+<section>
+  <div class="wrap">
+    <h2>한 곳에서, 한 번에<br><span class="hl">내 자산 전체를 봅니다</span></h2>
+    <p>분야별로 따로 상담받을 필요 없이, 한 번의 상담으로 전체 자산을 진단하고 우선순위를 정리해 드립니다.</p>
+    <div class="areas">
+      <div>보험<small>보장 점검·리모델링</small></div>
+      <div>연금·저축<small>노후 준비</small></div>
+      <div>주식·펀드<small>투자 자산 점검</small></div>
+      <div>상속·증여<small>절세 플랜</small></div>
+      <div>부동산<small>대출 컨설팅 포함</small></div>
+      <div>자영업·법인<small>자금 컨설팅</small></div>
+    </div>
+    <ul class="list steps" style="margin-top:24px">
+      <li><b>아래 신청서 작성 (1분)</b>이름, 연락처, 관심 분야만 남겨주세요</li>
+      <li><b>카카오톡으로 먼저 연락</b>전화가 부담스러우시면 카톡으로만 진행해도 됩니다</li>
+      <li><b>맞춤 자산관리 상담</b>현재 상황을 정리하고, 지금 가장 먼저 해야 할 것부터 알려드립니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. 의심 제거: 누가 상담하나 -->
+<section class="soft">
+  <div class="wrap">
+    <h2>누가 상담해 드리나요?</h2>
+    <div class="profile">
+      <div class="avatar" id="avatar">주</div>
+      <div>
+        <p class="name" data-c="advisorName">대표 컨설턴트 주유장</p>
+        <p class="role" data-c="advisorRole">주유장 라이프플랜연구소 (라플연)</p>
+      </div>
+    </div>
+    <p data-c="advisorIntro">한 가지 상품만 권하지 않습니다. 보험부터 투자, 부동산, 세금까지 고객님의 자산 전체를 놓고, 지금 꼭 필요한 것과 하지 않아도 되는 것을 솔직하게 말씀드립니다.</p>
+    <div class="video" id="videoBox" hidden><iframe id="videoFrame" title="소개 영상" allowfullscreen loading="lazy"></iframe></div>
+    <ul class="list check" style="margin-top:18px">
+      <li><b>상담 비용 0원</b>자산 진단과 상담 모두 무료입니다</li>
+      <li><b>가입 권유 없음</b>상담만 받고 끝나셔도 됩니다. 원하지 않으시면 추가 연락드리지 않습니다</li>
+      <li><b>개인정보는 상담 목적으로만</b>삭제를 요청하시면 즉시 파기합니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. 희소성 + 6. CTA (신청서) -->
+<section id="apply">
+  <div class="wrap">
+    <h2>무료 자산관리 상담 신청</h2>
+    <p>자산관리는 <b>빨리 시작할수록</b> 선택지가 많아집니다. 한 분 한 분 꼼꼼히 보기 위해 주간 상담 인원을 정해서 받고 있습니다.</p>
+    <div class="seats"><span class="dot"></span><span>이번 주 남은 자리 <b data-c="seats">2</b>명</span></div>
+
+    <div class="form-card">
+      <form id="leadForm" novalidate>
+        <div class="field" data-f="name">
+          <label for="name">이름 <span class="req">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="홍길동" maxlength="30">
+          <div class="err">이름을 입력해주세요.</div>
+        </div>
+        <div class="field" data-f="phone">
+          <label for="phone">연락처 <span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="010-1234-5678" maxlength="13">
+          <div class="err">휴대폰 번호를 정확히 입력해주세요.</div>
+        </div>
+        <div class="field" data-f="age">
+          <label for="age">연령대 <span class="req">*</span></label>
+          <select id="age" name="age">
+            <option value="">선택해주세요</option>
+            <option>20대</option><option>30대</option><option>40대</option><option>50대</option><option>60대 이상</option>
+          </select>
+          <div class="err">연령대를 선택해주세요.</div>
+        </div>
+        <div class="field" data-f="customerType">
+          <label for="customerType">현재 상황 <span class="req">*</span></label>
+          <select id="customerType" name="customerType">
+            <option value="">선택해주세요</option>
+            <option>직장인</option><option>자영업자</option><option>법인 대표</option><option>전문직</option><option>주부</option><option>은퇴(준비)</option><option>기타</option>
+          </select>
+          <div class="err">현재 상황을 선택해주세요.</div>
+        </div>
+        <div class="field" data-f="interest">
+          <span class="label">상담받고 싶은 분야 (여러 개 선택 가능) <span class="req">*</span></span>
+          <div class="chips" id="interestChips"></div>
+          <div class="err">한 가지 이상 선택해주세요.</div>
+        </div>
+        <div class="field">
+          <span class="label">편한 연락 방법</span>
+          <div class="chips">
+            <label><input type="radio" name="contact" value="카카오톡" checked>카카오톡</label>
+            <label><input type="radio" name="contact" value="전화">전화</label>
+            <label><input type="radio" name="contact" value="문자">문자</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="time">연락 가능한 시간</label>
+          <select id="time" name="time">
+            <option>언제든</option><option>오전 (9~12시)</option><option>오후 (12~18시)</option><option>저녁 (18~21시)</option>
+          </select>
+        </div>
+        <div class="hp" aria-hidden="true"><label>회사 <input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+
+        <div class="field consent" data-f="agree">
+          <label><input type="checkbox" id="agree" name="agree"> [필수] 개인정보 수집·이용에 동의합니다.</label>
+          <details>
+            <summary>내용 보기</summary>
+            <table>
+              <tr><th>수집 항목</th><td>이름, 연락처, 연령대, 현재 상황, 관심 분야, 연락 방법·시간</td></tr>
+              <tr><th>이용 목적</th><td>자산관리 상담 및 결과 안내</td></tr>
+              <tr><th>보유 기간</th><td>상담 종료 후 1년 또는 삭제 요청 시 즉시 파기</td></tr>
+            </table>
+            <p style="font-size:13px;margin:8px 0 0">동의를 거부할 수 있으나, 거부 시 상담 신청이 제한됩니다.</p>
+          </details>
+          <div class="err">개인정보 수집·이용에 동의해주세요.</div>
+          <label style="margin-top:10px;font-weight:500"><input type="checkbox" id="marketing" name="marketing"> [선택] 자산관리 정보 안내(문자/카카오톡) 수신에 동의합니다.</label>
+        </div>
+
+        <button class="btn" type="submit" id="submitBtn">무료 상담 신청 완료하기</button>
+        <p class="notice">신청 후 영업일 기준 24시간 안에 연락드립니다.</p>
+      </form>
+
+      <div class="done" id="done">
+        <div class="big">✅</div>
+        <h3>신청이 접수되었습니다</h3>
+        <p><b id="doneName"></b>님, 곧 <b id="doneContact">카카오톡</b>으로 먼저 연락드리겠습니다.<br>모르는 번호라도 꼭 확인 부탁드려요.</p>
+        <a class="btn" id="kakaoBtn" href="#" target="_blank" rel="noopener" hidden>카카오톡 채널 바로가기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq soft">
+  <div class="wrap">
+    <h2>자주 묻는 질문</h2>
+    <details><summary>정말 무료인가요?</summary><p>네. 자산 진단과 상담 모두 비용이 없습니다.</p></details>
+    <details><summary>상담받으면 꼭 뭔가 가입해야 하나요?</summary><p>아닙니다. 지금 상태가 괜찮다면 그대로 유지하시라고 말씀드립니다. 상담만 받고 끝나셔도 됩니다.</p></details>
+    <details><summary>자산이 많지 않아도 상담받을 수 있나요?</summary><p>물론입니다. 사회초년생의 첫 저축 계획부터 은퇴 준비, 법인 자금까지 상황에 맞춰 상담해 드립니다.</p></details>
+    <details><summary>전화가 부담스러운데요.</summary><p>연락 방법에서 '카카오톡'이나 '문자'를 선택하시면 전화 없이 진행합니다.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p data-c="footer">주유장 라이프플랜연구소</p>
+    <p data-c="compliance">본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.</p>
+    <p data-c="reviewNo">광고심의필 번호: (심의 후 입력)</p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기 (남은 자리 <span data-c="seats">2</span>명)</a></div>
+
+<script>
+/* =========================================================
+   여기만 바꾸면 됩니다 (설치가이드.md 참고)
+   ========================================================= */
+const CONFIG = {
+  // 구글 Apps Script 웹앱 주소 (배포 후 받은 https://script.google.com/macros/s/.../exec)
+  endpoint: "",
+  brand: "주유장 라이프플랜연구소",
+  advisorName: "대표 컨설턴트 주유장",
+  advisorRole: "주유장 라이프플랜연구소 (라플연)",
+  advisorIntro: "한 가지 상품만 권하지 않습니다. 보험부터 투자, 부동산, 세금까지 고객님의 자산 전체를 놓고, 지금 꼭 필요한 것과 하지 않아도 되는 것을 솔직하게 말씀드립니다.",
+  advisorPhoto: "",          // 프로필 사진 주소 (비워두면 이름 첫 글자)
+  youtubeId: "",             // 소개 영상 유튜브 ID (예: dQw4w9WgXcQ), 비워두면 숨김
+  seats: 2,                  // 희소성 문구 "남은 자리 N명"
+  interests: ["전체 자산 진단", "보험 점검", "연금·노후", "저축", "주식·펀드", "상속·증여", "절세", "부동산·대출", "자영업 자금", "법인 컨설팅"],
+  kakaoChannelUrl: "",       // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
+  footer: "주유장 라이프플랜연구소 · 대표 컨설턴트 주유장",
+  compliance: "본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.",
+  reviewNo: "광고심의필 번호: (심의 후 입력)",
+  metaPixelId: ""            // 메타 픽셀 ID (숫자), 비워두면 픽셀 미사용
+};
+
+/* 댓글 키워드·광고별 첫 화면 문구
+   링크에 ?kw=점검 처럼 붙이거나, utm_campaign 이 match 중 하나로 시작하면 해당 문구로 바뀝니다.
+   (예: ?src=dm&utm_campaign=자영업자 → "사장님" 문구) 해당 없으면 기본 문구 그대로.
+   title 의 <span class="hl">…</span> 부분이 주황색 강조입니다. */
+const VARIANTS = {
+  점검: {
+    match: ["점검", "직장인"],
+    title: '월급은 들어오는데<br><span class="hl">돈이 안 모이는 이유</span>,<br>확인해 보셨나요?',
+    sub: '보험·적금·연금·투자를 한 장에 정리하면 줄일 곳과 늘릴 곳이 바로 보입니다. 직장인 <b>무료 자산 점검</b>을 받아보세요.',
+    cta: "무료 자산 점검 신청하기",
+    customerType: "직장인",
+    interests: ["전체 자산 진단", "보험 점검"]
+  },
+  사장님: {
+    match: ["사장님", "자영업자", "자영업"],
+    title: '매출은 나는데<br><span class="hl">사장님 통장엔</span><br>왜 남는 게 없을까요?',
+    sub: '사업 자금과 개인 자산을 나누고, 운영 자금·대출·절세·사장님 노후까지 한 번에 정리해 드립니다. 바쁘시면 <b>카톡으로만</b> 진행합니다.',
+    cta: "사장님 무료 자금 상담 신청",
+    customerType: "자영업자",
+    interests: ["자영업 자금", "절세"]
+  },
+  상속: {
+    match: ["상속", "증여", "상속증여"],
+    title: '자녀에게 물려줄 재산,<br><span class="hl">미리 준비할수록</span><br>선택지가 많아집니다',
+    sub: '부동산·금융자산·보험을 한 번에 놓고 상속·증여 순서를 정해 드립니다. 필요하면 <b>세무사·변호사</b>도 연결해 드립니다.',
+    cta: "상속·증여 무료 상담 신청",
+    customerType: "",
+    interests: ["상속·증여", "부동산·대출"]
+  }
+};
+/* ========================================================= */
+
+(function applyConfig() {
+  document.querySelectorAll("[data-c]").forEach(el => {
+    const v = CONFIG[el.dataset.c];
+    if (v !== undefined && v !== "") el.textContent = v;
+  });
+  const avatar = document.getElementById("avatar");
+  if (CONFIG.advisorPhoto) {
+    avatar.style.backgroundImage = `url("${CONFIG.advisorPhoto}")`;
+    avatar.textContent = "";
+  } else {
+    // "대표 컨설턴트 주유장"처럼 직함이 앞에 오면 마지막 단어(이름)의 첫 글자를 씀
+    avatar.textContent = (CONFIG.advisorName || "?").trim().split(/\s+/).pop().charAt(0);
+  }
+  if (CONFIG.youtubeId) {
+    document.getElementById("videoFrame").src = `https://www.youtube.com/embed/${encodeURIComponent(CONFIG.youtubeId)}`;
+    document.getElementById("videoBox").hidden = false;
+  }
+  const chips = document.getElementById("interestChips");
+  CONFIG.interests.forEach(t => {
+    const l = document.createElement("label");
+    l.innerHTML = `<input type="checkbox" name="interest"><span></span>`;
+    l.querySelector("input").value = t;
+    l.querySelector("span").textContent = t;
+    chips.appendChild(l);
+  });
+  if (!CONFIG.endpoint) document.getElementById("testBanner").style.display = "block";
+})();
+
+// Meta 픽셀
+if (CONFIG.metaPixelId) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', CONFIG.metaPixelId);
+  fbq('track', 'PageView');
+}
+
+// 유입 경로 (광고/DM 링크에 ?src=dm&utm_campaign=... 붙이면 시트에 같이 저장)
+const params = new URLSearchParams(location.search);
+const source = {
+  src: params.get("src") || "",
+  utm_source: params.get("utm_source") || "",
+  utm_medium: params.get("utm_medium") || "",
+  utm_campaign: params.get("utm_campaign") || "",
+  utm_content: params.get("utm_content") || "",
+  referrer: document.referrer || ""
+};
+
+// 키워드·광고에 맞춰 첫 화면 문구와 신청서 기본 선택을 바꿈
+(function applyVariant() {
+  const kw = (params.get("kw") || "").trim();
+  const campaign = source.utm_campaign.trim();
+  const key = Object.keys(VARIANTS).find(k =>
+    VARIANTS[k].match.some(m => kw === m || campaign.startsWith(m)));
+  if (!key) return;
+  const v = VARIANTS[key];
+  document.getElementById("heroTitle").innerHTML = v.title;
+  document.getElementById("heroSub").innerHTML = v.sub;
+  document.getElementById("heroCta").textContent = v.cta;
+  if (v.customerType) document.getElementById("customerType").value = v.customerType;
+  document.querySelectorAll('#interestChips input').forEach(i => {
+    if (v.interests.includes(i.value)) i.checked = true;
+  });
+  // ?kw= 로만 들어온 경우에도 시트에서 어떤 키워드로 왔는지 보이게 함
+  if (!source.utm_campaign) source.utm_campaign = "kw_" + key;
+})();
+
+// 하단 고정 버튼: 신청서 보이면 숨김
+const sticky = document.getElementById("sticky");
+new IntersectionObserver(([e]) => sticky.classList.toggle("hide", e.isIntersecting), { threshold: 0.05 })
+  .observe(document.getElementById("apply"));
+
+// 연락처 자동 하이픈
+const phone = document.getElementById("phone");
+phone.addEventListener("input", () => {
+  const d = phone.value.replace(/\D/g, "").slice(0, 11);
+  phone.value = d.length < 4 ? d : d.length < 8 ? `${d.slice(0,3)}-${d.slice(3)}` : `${d.slice(0,3)}-${d.slice(3, d.length - 4)}-${d.slice(-4)}`;
+});
+
+const form = document.getElementById("leadForm");
+const btn = document.getElementById("submitBtn");
+
+function setInvalid(key, bad) {
+  form.querySelector(`[data-f="${key}"]`).classList.toggle("invalid", bad);
+  return bad;
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const name = (fd.get("name") || "").trim();
+  const phoneDigits = (fd.get("phone") || "").replace(/\D/g, "");
+  let bad = false;
+  bad = setInvalid("name", name.length < 2) || bad;
+  bad = setInvalid("phone", !/^01[016789]\d{7,8}$/.test(phoneDigits)) || bad;
+  bad = setInvalid("age", !fd.get("age")) || bad;
+  bad = setInvalid("customerType", !fd.get("customerType")) || bad;
+  bad = setInvalid("interest", fd.getAll("interest").length === 0) || bad;
+  bad = setInvalid("agree", !document.getElementById("agree").checked) || bad;
+  if (bad) {
+    form.querySelector(".invalid").scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  const data = {
+    name,
+    phone: fd.get("phone"),
+    age: fd.get("age"),
+    customerType: fd.get("customerType"),
+    interest: fd.getAll("interest").join(", "),
+    contact: fd.get("contact"),
+    time: fd.get("time"),
+    agree: "동의",
+    marketing: document.getElementById("marketing").checked ? "동의" : "미동의",
+    company: fd.get("company") || "",   // 스팸 방지용 숨김 칸
+    page: location.origin + location.pathname,
+    ...source
+  };
+
+  btn.disabled = true;
+  btn.textContent = "접수 중...";
+  try {
+    if (CONFIG.endpoint) {
+      // Apps Script는 CORS 응답을 주지 않으므로 no-cors로 전송 (응답 확인 불가, 저장은 정상 동작)
+      await fetch(CONFIG.endpoint, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(data)
+      });
+    } else {
+      console.log("[테스트 모드] 저장될 데이터:", data);
+    }
+    if (window.fbq) fbq("track", "Lead");
+    form.style.display = "none";
+    document.getElementById("doneName").textContent = name;
+    document.getElementById("doneContact").textContent = data.contact;
+    if (CONFIG.kakaoChannelUrl) {
+      const k = document.getElementById("kakaoBtn");
+      k.href = CONFIG.kakaoChannelUrl;
+      k.hidden = false;
+    }
+    document.getElementById("done").style.display = "block";
+  } catch (err) {
+    alert("일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    btn.disabled = false;
+    btn.textContent = "무료 상담 신청 완료하기";
+  }
+});
+</script>
+</body>
+</html>
