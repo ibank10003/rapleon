@@ -502,13 +502,7 @@ form.addEventListener("submit", async (e) => {
   btn.textContent = "접수 중...";
   try {
     if (CONFIG.endpoint) {
-      // Apps Script는 CORS 응답을 주지 않으므로 no-cors로 전송 (응답 확인 불가, 저장은 정상 동작)
-      await fetch(CONFIG.endpoint, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(data)
-      });
+      await submitLead(data);
     } else {
       console.log("[테스트 모드] 저장될 데이터:", data);
     }
@@ -523,11 +517,39 @@ form.addEventListener("submit", async (e) => {
     }
     document.getElementById("done").style.display = "block";
   } catch (err) {
-    alert("일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    console.error("신청 저장 실패", err);
+    alert(CONFIG.kakaoChannelUrl
+      ? "일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도하시거나, 확인을 누르면 열리는 카카오톡 채널로 남겨주세요."
+      : "일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    if (CONFIG.kakaoChannelUrl) window.open(CONFIG.kakaoChannelUrl, "_blank");
     btn.disabled = false;
     btn.textContent = "무료 상담 신청 완료하기";
   }
 });
+
+// 구글 시트에 저장하고, 시트가 "저장됨(ok)"이라고 답할 때만 성공으로 봄. 실패하면 한 번 더 시도
+async function submitLead(data) {
+  const body = JSON.stringify(data);
+  let lastErr;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      // text/plain 이라 사전 요청(preflight) 없이 보내지고, Apps Script 응답을 읽을 수 있음
+      const res = await fetch(CONFIG.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+      const result = await res.json();
+      if (result.ok) return;
+      lastErr = new Error(result.error || "저장 실패");
+      if (result.error === "invalid") break;   // 입력값 문제는 다시 보내도 같음
+    } catch (err) {
+      lastErr = err;
+    }
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  throw lastErr;
+}
 </script>
 </body>
 </html>
