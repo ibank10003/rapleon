@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>라플연 릴스 엔진</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:540px;height:960px;overflow:hidden;background:#0B1F3A;font-family:'WenQuanYi Zen Hei','Noto Sans KR',sans-serif;color:#fff}
+#stage{position:relative;width:540px;height:960px;overflow:hidden;background:linear-gradient(160deg,#0B1F3A 0%,#12335f 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.35}
+.abs{position:absolute;left:0;width:540px;text-align:center}
+.b{-webkit-text-stroke:1.2px currentColor;letter-spacing:-.5px}
+.y{color:#FFC93C}.dim{color:#b9c8e0}
+.scene{position:absolute;inset:0;opacity:0}
+.row{position:absolute;left:36px;width:468px;height:96px;border-radius:20px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);opacity:0}
+.row .num{position:absolute;left:16px;top:24px;width:48px;height:48px;border-radius:50%;background:#FFC93C;color:#0B1F3A;font-size:26px;line-height:48px;text-align:center}
+.row .t{position:absolute;left:80px;top:16px;font-size:22px}
+.row .s{position:absolute;left:80px;top:54px;font-size:13px;color:#b9c8e0}
+.row svg{position:absolute;right:16px;top:24px}
+.pill{position:absolute;border-radius:55px;background:#FFC93C;color:#0B1F3A;text-align:center}
+.chip{position:absolute;width:200px;height:70px;border-radius:35px;text-align:center;line-height:70px;font-size:26px;opacity:0}
+.foot{position:absolute;bottom:34px;left:0;width:540px;text-align:center;font-size:11px;color:#8fa3c4}
+#tag{position:absolute;top:40px;left:0;width:540px;text-align:center;font-size:14px;color:#FFC93C}
+</style></head><body>
+<div id="stage">
+  <div class="blob" id="b1" style="width:320px;height:320px;background:#2E7BFF"></div>
+  <div class="blob" id="b2" style="width:280px;height:280px;background:#FFC93C;opacity:.18"></div>
+  <div id="tag" class="b"></div>
+  <div class="foot" id="foot">상담 무료 · 가입 권유 없음 · 본 영상은 특정 금융상품 가입을 권유하지 않습니다</div>
+</div>
+<script>
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lin=(t,a,b)=>clamp((t-a)/(b-a));
+const outCubic=x=>1-Math.pow(1-x,3);
+const outBack=x=>{const c=2.70158;return 1+c*Math.pow(x-1,3)+1.70158*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id);
+const stage=$('stage');
+const R=new URLSearchParams(location.search).get('r')||'2';
+const EVENTS=[];window.EVENTS=EVENTS;
+const ev=(t,type,x={})=>EVENTS.push(Object.assign({t,type},x));
+
+function mk(parent,cls,css,html){const d=document.createElement('div');d.className=cls;Object.assign(d.style,css||{});if(html!=null)d.innerHTML=html;parent.appendChild(d);return d}
+function T(parent,y,size,html,cls=''){return mk(parent,'abs b '+cls,{top:y+'px',fontSize:size+'px'},html)}
+function pop(el,t,a,dur=.5,y=40){const p=lin(t,a,a+dur);el.style.opacity=clamp(p*3);el.style.transform=`translateY(${(1-outCubic(p))*y}px) scale(${.6+.4*outBack(p)})`}
+const CHK='<circle cx="24" cy="24" r="21" fill="none" stroke="#35E0A1" stroke-width="4" class="ring"/><path d="M13 25 L21 33 L36 16" fill="none" stroke="#35E0A1" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" class="chk"/>';
+const WARN='<circle cx="24" cy="24" r="21" fill="none" stroke="#FF6B6B" stroke-width="4" class="ring"/><path d="M24 12 V28" stroke="#FF6B6B" stroke-width="5" stroke-linecap="round" class="chk"/><circle cx="24" cy="36" r="3" fill="#FF6B6B" class="chk2"/>';
+
+const ICONS={
+ shield:`<path d="M270 10 L350 38 V100 C350 148 316 178 270 194 C224 178 190 148 190 100 V38 Z" fill="#2E7BFF" stroke="#fff" stroke-width="5"/><text x="270" y="130" text-anchor="middle" font-size="90" fill="#FFC93C" font-family="WenQuanYi Zen Hei" class="wob">?</text>`,
+ wallet:`<rect x="190" y="50" width="160" height="110" rx="18" fill="#2E7BFF" stroke="#fff" stroke-width="5"/><rect x="190" y="50" width="160" height="34" rx="14" fill="#1b57c4" stroke="#fff" stroke-width="5"/><circle cx="318" cy="118" r="14" fill="#FFC93C"/><circle cx="360" cy="40" r="16" fill="#FFC93C" class="wob"/><circle cx="190" cy="30" r="11" fill="#35E0A1" class="wob"/>`,
+ bucket:`<path d="M205 30 L335 30 L318 140 L222 140 Z" fill="#2E7BFF" stroke="#fff" stroke-width="5"/><ellipse cx="270" cy="30" rx="65" ry="10" fill="#1b57c4" stroke="#fff" stroke-width="4"/><circle class="drop" cx="255" cy="150" r="9" fill="#FFC93C"/><circle class="drop" cx="285" cy="150" r="9" fill="#FFC93C"/><circle class="drop" cx="270" cy="150" r="9" fill="#FFC93C"/>`,
+ store:`<rect x="195" y="85" width="150" height="100" rx="8" fill="#2E7BFF" stroke="#fff" stroke-width="5"/><path d="M185 85 L205 25 H335 L355 85 Z" fill="#FFC93C" stroke="#fff" stroke-width="5"/><path d="M225 25 L215 85 M270 25 V85 M315 25 L325 85" stroke="#fff" stroke-width="4"/><rect x="250" y="125" width="40" height="60" fill="#0B1F3A" stroke="#fff" stroke-width="4"/>`,
+ clock:`<circle cx="270" cy="100" r="82" fill="#2E7BFF" stroke="#fff" stroke-width="6"/><line x1="270" y1="100" x2="270" y2="48" stroke="#fff" stroke-width="7" stroke-linecap="round"/><g class="hand" style="transform-origin:270px 100px"><line x1="270" y1="100" x2="270" y2="38" stroke="#FFC93C" stroke-width="6" stroke-linecap="round"/></g><circle cx="270" cy="100" r="8" fill="#fff"/>`,
+ chat:`<path d="M175 25 H365 a18 18 0 0 1 18 18 V120 a18 18 0 0 1 -18 18 H280 L235 178 V138 H175 a18 18 0 0 1 -18 -18 V43 a18 18 0 0 1 18 -18 Z" fill="#2E7BFF" stroke="#fff" stroke-width="5"/><text x="270" y="108" text-anchor="middle" font-size="78" fill="#FFC93C" font-family="WenQuanYi Zen Hei" class="wob">?</text>`
+};
+
+const B={};
+B.hook=(S,el)=>{
+  const svg=mk(el,'abs',{top:'150px',height:'200px'},`<svg width="540" height="200" viewBox="0 0 540 200">${ICONS[S.icon]}</svg>`);
+  let y=390;const ls=S.lines.map((l,i)=>{const d=T(el,y,l.size,l.h,l.cls||'');y+=l.size*1.3+(l.gap||0);return d});
+  ev(S.a+.1,'whoosh',{d:.5,g:.1});ls.forEach((_,i)=>ev(S.a+.6+i*.45,'pop',{f:500+i*80}));
+  return t=>{const p=outBack(lin(t,S.a+.1,S.a+.7));svg.style.transform=`scale(${.3+.7*p}) rotate(${(1-p)*-25}deg)`;svg.style.opacity=clamp(lin(t,S.a+.1,S.a+.4)*3);
+    svg.querySelectorAll('.wob').forEach(n=>n.setAttribute('transform',`rotate(${Math.sin(t*6)*8} 270 100)`));
+    svg.querySelectorAll('.drop').forEach((n,i)=>{const ph=((t*1.2+i*.33)%1);n.setAttribute('cy',140+ph*70);n.setAttribute('opacity',1-ph)});
+    svg.querySelectorAll('.hand').forEach(n=>n.style.transform=`rotate(${(t-S.a)*140}deg)`);
+    ls.forEach((d,i)=>pop(d,t,S.a+.6+i*.45,.55));};
+};
+B.lines=(S,el)=>{
+  let y=S.y0||330;const ls=S.lines.map(l=>{const d=T(el,y,l.size,l.h,l.cls||'');y+=l.size*1.35+(l.gap||0);return d});
+  ls.forEach((_,i)=>ev(S.a+.4+i*.65,'pop',{f:520+i*60}));
+  return t=>ls.forEach((d,i)=>pop(d,t,S.a+.4+i*.65,.55));
+};
+B.rows=(S,el)=>{
+  const k=T(el,92,24,S.kicker,'y'),ti=T(el,128,44,S.title);
+  ev(S.a+.2,'pop',{f:560});ev(S.a+.4,'pop',{f:620});
+  const rows=S.rows.map((r,i)=>{const top=218+116*i;const d=mk(el,'row',{top:top+'px'},`<div class="num b">${i+1}</div><div class="t b">${r.t}</div><div class="s">${r.s}</div><svg width="48" height="48" viewBox="0 0 48 48">${S.mark==='warn'?WARN:CHK}</svg>`);
+    const st=S.a+1.2+i*(S.step||2.2);ev(st,'pop',{f:480});ev(st+.9,S.mark==='warn'?'warn':'chime',{f:[880,988,1047,1175][i%4]});return {d,st}});
+  return t=>{pop(k,t,S.a+.2);pop(ti,t,S.a+.4);
+    rows.forEach(({d,st})=>{pop(d,t,st,.5,50);const ring=d.querySelector('.ring');ring.style.strokeDasharray=132;ring.style.strokeDashoffset=132*(1-outCubic(clamp(lin(t,st+.7,st+1.2)*1.5)));
+      d.querySelectorAll('.chk').forEach(c=>{c.style.strokeDasharray=60;c.style.strokeDashoffset=60*(1-outCubic(lin(t,st+.9,st+1.3)))});
+      d.querySelectorAll('.chk2').forEach(c=>c.style.opacity=lin(t,st+1.2,st+1.3));
+      d.style.background=`rgba(255,255,255,${.08+.06*Math.sin(clamp(lin(t,st+.7,st+1.5))*Math.PI)})`;});};
+};
+B.chart=(S,el)=>{
+  const c0=T(el,130,34,S.title),c1=T(el,610,46,S.bottom);
+  const svg=mk(el,'abs',{top:'210px',height:'360px'},`<svg width="540" height="360" viewBox="0 0 540 360"><line x1="60" y1="320" x2="490" y2="320" stroke="#5c7399" stroke-width="2"/><path class="up" d="M60 280 C140 270 200 220 260 190 S400 90 490 50" fill="none" stroke="#35E0A1" stroke-width="7" stroke-linecap="round"/><path class="fl" d="M60 270 L490 270" fill="none" stroke="#FF6B6B" stroke-width="7" stroke-linecap="round" stroke-dasharray="14 12"/><circle class="du" r="11" fill="#35E0A1"/><circle class="df" r="11" fill="#FF6B6B"/><text x="480" y="28" text-anchor="end" fill="#35E0A1" font-size="22" font-family="WenQuanYi Zen Hei" class="lu">${S.up}</text><text x="480" y="302" text-anchor="end" fill="#FF6B6B" font-size="22" font-family="WenQuanYi Zen Hei" class="lf">${S.flat}</text></svg>`);
+  ev(S.a+.2,'pop',{f:520});ev(S.a+.8,'whoosh',{d:1.8,g:.1});ev(S.a+2.9,'pop',{f:420,g:.4});
+  const up=svg.querySelector('.up');const L=up.getTotalLength();
+  return t=>{pop(c0,t,S.a+.2);const g=outCubic(lin(t,S.a+.8,S.a+2.6));up.style.strokeDasharray=L;up.style.strokeDashoffset=L*(1-g);
+    const pt=up.getPointAtLength(L*g);const du=svg.querySelector('.du');du.setAttribute('cx',pt.x);du.setAttribute('cy',pt.y);
+    const fp=lin(t,S.a+.8,S.a+2.6);svg.querySelector('.fl').setAttribute('d',`M60 270 L${60+430*fp} 270`);const df=svg.querySelector('.df');df.setAttribute('cx',60+430*fp);df.setAttribute('cy',270);
+    svg.querySelector('.lu').style.opacity=lin(t,S.a+1.4,S.a+2);svg.querySelector('.lf').style.opacity=lin(t,S.a+1.4,S.a+2);pop(c1,t,S.a+2.9);};
+};
+B.scatter=(S,el)=>{
+  const cols=['#2E7BFF','#35E0A1','#FFC93C','#FF8A5B','#B58CFF','#4DD0E1'];
+  const pos=[[40,300],[340,250],[130,470],[350,420],[50,640],[320,620]];
+  const grid=[[95,345],[295,345],[95,435],[295,435],[95,525],[295,525]];
+  const c1=T(el,120,30,S.cap1),c2=T(el,120,34,S.cap2);
+  const frame=mk(el,'',{position:'absolute',left:'60px',top:'290px',width:'420px',height:'320px',borderRadius:'24px',border:'2px solid rgba(255,255,255,.35)',background:'rgba(255,255,255,.07)',opacity:0});
+  const items=S.items.map((s,i)=>{const dark=(i===2||i===1||i===5);return mk(el,'b',{position:'absolute',width:'150px',height:'56px',borderRadius:'28px',background:cols[i],color:dark?'#0B1F3A':'#fff',textAlign:'center',lineHeight:'56px',fontSize:'24px',opacity:0},s)});
+  items.forEach((_,i)=>ev(S.a+.6+i*.3,'pop',{f:450+i*40}));ev(S.mergeAt,'whoosh',{d:.9,g:.14,up:false});ev(S.mergeAt+1.1,'chime',{f:1047});
+  return t=>{
+    pop(c1,t,S.a+.2);c1.style.opacity=clamp(lin(t,S.a+.2,S.a+.5)*3)*(1-lin(t,S.mergeAt,S.mergeAt+.3));
+    pop(c2,t,S.mergeAt+.6);
+    const m=outCubic(lin(t,S.mergeAt,S.mergeAt+1));frame.style.opacity=m;
+    items.forEach((d,i)=>{const st=S.a+.6+i*.3;const o=clamp(lin(t,st,st+.3));d.style.opacity=o;
+      const dx=Math.sin(t*1.7+i*2)*18,dy=Math.cos(t*1.3+i*1.5)*18;
+      const x=pos[i][0]+dx*(1-m)+(grid[i][0]-pos[i][0])*m, y=pos[i][1]+dy*(1-m)+(grid[i][1]-pos[i][1])*m;
+      d.style.transform=`translate(${x}px,${y}px) scale(${.6+.4*outBack(lin(t,st,st+.4))})`;d.style.left='0px';d.style.top='0px';});
+  };
+};
+B.stack=(S,el)=>{
+  const cap=T(el,130,34,S.cap);const cols=['#2E7BFF','#35E0A1','#FFC93C'],tc=['#fff','#0B1F3A','#0B1F3A'];
+  const bl=S.segs.map((s,i)=>mk(el,'b',{position:'absolute',left:'120px',top:(480-i*80)+'px',width:'300px',height:'70px',borderRadius:'16px',background:cols[i],color:tc[i],textAlign:'center',lineHeight:'70px',fontSize:'28px',opacity:0},s));
+  const tot=T(el,610,50,S.total,'y');
+  S.segs.forEach((_,i)=>ev(S.a+1+i*.8,'pop',{f:300+i*100,g:.4}));ev(S.a+3.6,'chime',{f:880});
+  return t=>{pop(cap,t,S.a+.2);bl.forEach((d,i)=>{const st=S.a+1+i*.8;const p=lin(t,st,st+.5);d.style.opacity=clamp(p*4);d.style.transform=`translateY(${-(1-outBounce(p))*300}px)`});
+    pop(tot,t,S.a+3.6);tot.style.transform+=` scale(${1+Math.max(0,Math.sin((t-S.a-4)*4))*.05*(t>S.a+4?1:0)})`;};
+};
+function outBounce(x){const n=7.5625,d=2.75;if(x<1/d)return n*x*x;if(x<2/d)return n*(x-=1.5/d)*x+.75;if(x<2.5/d)return n*(x-=2.25/d)*x+.9375;return n*(x-=2.625/d)*x+.984375}
+B.venn=(S,el)=>{
+  const c1=T(el,130,34,S.cap1),c2=T(el,130,38,S.cap2);
+  const svg=mk(el,'abs',{top:'260px',height:'320px'},`<svg width="540" height="320" viewBox="0 0 540 320"><circle class="a" cy="160" r="110" fill="#2E7BFF" fill-opacity=".75" stroke="#fff" stroke-width="4"/><circle class="b2" cy="160" r="110" fill="#FFC93C" fill-opacity=".75" stroke="#fff" stroke-width="4"/><text class="la" y="165" text-anchor="middle" font-size="30" fill="#fff" font-family="WenQuanYi Zen Hei">${S.la}</text><text class="lb" y="165" text-anchor="middle" font-size="30" fill="#0B1F3A" font-family="WenQuanYi Zen Hei">${S.lb}</text><text class="q" x="270" y="185" text-anchor="middle" font-size="80" fill="#fff" font-family="WenQuanYi Zen Hei">?</text><g class="ck" transform="translate(246,10)"><circle cx="24" cy="24" r="21" fill="#35E0A1"/><path d="M13 25 L21 33 L36 16" fill="none" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`);
+  ev(S.a+.2,'pop',{f:520});ev(S.split,'whoosh',{d:.8,g:.14});ev(S.split+.9,'chime',{f:988});ev(S.split+.5,'pop',{f:600});
+  return t=>{pop(c1,t,S.a+.2);c1.style.opacity=clamp(lin(t,S.a+.2,S.a+.5)*3)*(1-lin(t,S.split,S.split+.3));pop(c2,t,S.split+.6);
+    const p=outBack(lin(t,S.split,S.split+1));const sh=(1-lin(t,S.split,S.split+.3))*Math.sin(t*25)*4;
+    const x1=235-100*p+sh,x2=305+100*p-sh;svg.style.opacity=clamp(lin(t,S.a+.2,S.a+.6)*3);
+    svg.querySelector('.a').setAttribute('cx',x1);svg.querySelector('.b2').setAttribute('cx',x2);
+    const la=svg.querySelector('.la'),lb=svg.querySelector('.lb');la.setAttribute('x',x1-(p<.1?40:0));lb.setAttribute('x',x2+(p<.1?40:0));
+    svg.querySelector('.q').style.opacity=1-clamp(p*3);svg.querySelector('.ck').style.opacity=lin(t,S.split+.8,S.split+1.1);};
+};
+B.chips=(S,el)=>{
+  const cap=T(el,130,36,S.cap),bt=T(el,640,40,S.bottom);
+  const cols=['#2E7BFF','#35E0A1','#FFC93C','#FF8A5B'];const pos=[[50,260],[290,300],[50,400],[290,440]];
+  const chips=S.items.map((s,i)=>mk(el,'chip b',{left:pos[i][0]+'px',top:pos[i][1]+'px',background:cols[i],color:i===0||i===3?'#fff':'#0B1F3A'},s));
+  chips.forEach((_,i)=>ev(S.a+.8+i*.4,'pop',{f:440+i*60}));ev(S.a+2.8,'pop',{f:300,g:.4});
+  return t=>{pop(cap,t,S.a+.2);chips.forEach((c,i)=>{const st=S.a+.8+i*.4;const p=lin(t,st,st+.5);c.style.opacity=clamp(p*3);const s=t>S.a+2.5?1+Math.sin(t*8+i)*.04:1;c.style.transform=`translateY(${(1-outCubic(p))*50}px) scale(${(.6+.4*outBack(p))*s}) rotate(${t>S.a+2.5?Math.sin(t*10+i*2)*2:0}deg)`});pop(bt,t,S.a+2.8);};
+};
+B.stamp=(S,el)=>{
+  const ring=mk(el,'',{position:'absolute',left:'110px',top:'200px',width:'320px',height:'320px',borderRadius:'50%',border:'10px solid #FF6B6B',opacity:0});
+  const tx=mk(el,'abs b',{top:'320px',fontSize:'84px',color:'#FF6B6B',opacity:0},S.text);const sub=T(el,590,30,S.sub);
+  ev(S.a+.5,'pop',{f:150,g:.7});ev(S.a+.55,'whoosh',{d:.3,g:.2,up:false});ev(S.a+1.6,'pop',{f:520});
+  return t=>{const p=lin(t,S.a+.4,S.a+.8);const sc=1+(1-outCubic(p))*1.6;const r=-12;
+    ring.style.opacity=clamp(p*4);ring.style.transform=`scale(${sc}) rotate(${r}deg)`;tx.style.opacity=clamp(p*4);tx.style.transform=`scale(${sc}) rotate(${r}deg)`;
+    pop(sub,t,S.a+1.6);};
+};
+B.cta=(S,el)=>{
+  const h=T(el,120,34,S.head);
+  const pill=mk(el,'pill b',{left:'90px',top:'200px',width:'360px',height:'110px',lineHeight:'110px',fontSize:S.typed?'48px':'34px'},`<span id="typed${S.a}"></span>${S.typed?'<span id="caret'+S.a+'">|</span>':''}`);
+  const hint=S.hint?T(el,330,20,S.hint,'dim'):null;
+  const l2=T(el,430,34,S.l2),l3=T(el,480,34,S.l3,'y');
+  const br=mk(el,'',{position:'absolute',left:'60px',top:'580px',width:'420px',height:'110px',borderRadius:'22px',background:'rgba(255,255,255,.1)',border:'1.5px solid rgba(255,255,255,.25)',textAlign:'center'},'<div class="b y" style="font-size:30px;margin-top:20px;-webkit-text-stroke:1.2px #FFC93C">라플연</div><div style="font-size:16px;margin-top:8px;color:#dce6f5">주유장 라이프플랜연구소</div>');
+  ev(S.a+.2,'pop',{f:520});ev(S.a+.5,'pop',{f:300,g:.4});
+  if(S.typed){ev(S.a+1.3,'tick',{g:.35});ev(S.a+1.65,'tick',{g:.35})}else{ev(S.a+2,'tick',{g:.4})}
+  ev(S.a+2.0,'pop',{f:520});ev(S.a+2.6,'pop',{f:560});ev(S.a+3.0,'pop',{f:600});ev(S.a+3.2,'whoosh',{d:.5,g:.12});ev(S.a+3.4,'chime',{f:1047,g:.35});ev(S.a+3.9,'chime',{f:1319,g:.25});
+  return t=>{pop(h,t,S.a+.2);const bb=outBack(lin(t,S.a+.5,S.a+1.1));
+    let press=1;if(!S.typed){const q=lin(t,S.a+2,S.a+2.25);press=1-.08*Math.sin(q*Math.PI)}
+    pill.style.transform=`scale(${bb*press})`;pill.style.opacity=clamp(lin(t,S.a+.5,S.a+.7)*3);
+    const tp=pill.querySelector('span');
+    if(S.typed){const n=Math.floor(clamp((t-S.a-1.3)/1.0)*(S.word.length+.999));tp.textContent=S.word.slice(0,Math.min(n,S.word.length));pill.querySelector('[id^=caret]').style.opacity=(Math.floor(t*3)%2)?0:1}else tp.textContent=S.pill;
+    if(hint)pop(hint,t,S.a+2);pop(l2,t,S.a+2.6);pop(l3,t,S.a+3);
+    const b2=outBack(lin(t,S.a+3.4,S.a+4.1));br.style.transform=`scale(${b2})`;br.style.opacity=clamp(lin(t,S.a+3.4,S.a+3.6)*3);};
+};
+
+const CFG={
+2:{d:26,tag:'라플연 · 자산 점검',scenes:[
+ {type:'hook',a:0,b:3.6,icon:'wallet',lines:[{h:'보험은 설계사,',size:42},{h:'적금은 은행,',size:42},{h:'주식은 앱',size:56,cls:'y'}]},
+ {type:'scatter',a:3.5,b:11.2,mergeAt:7.2,items:['보험','적금','주식','연금','부동산','세금'],cap1:'내 돈, 한 장으로 설명할 수 있으세요?',cap2:'<span class="y">한 번에</span> 모아서 봅니다'},
+ {type:'rows',a:11.1,b:19.4,kicker:'라플연이 하는 일',title:'우선순위만 정리해요',rows:[{t:'전체 자산 한눈에 점검',s:'보험·연금·투자·부동산·세금'},{t:'지금 꼭 필요한 것',s:'먼저 해야 할 것부터 순서대로'},{t:'하지 않아도 되는 것',s:'불필요한 건 솔직하게 말씀드려요'}]},
+ {type:'cta',a:19.3,b:26.1,head:'한 번에 점검받고 싶다면?',pill:'무료 상담 신청',l2:'상담은 무료 · 가입 권유 없음',l3:'프로필 링크에서'}]},
+3:{d:28,tag:'라플연 · 재테크',scenes:[
+ {type:'hook',a:0,b:3.5,icon:'bucket',lines:[{h:'월급은 모으는데',size:44},{h:'통장은 그대로?',size:58,cls:'y'}]},
+ {type:'chart',a:3.4,b:8.6,title:'월급은 <span class="y">오르는데</span>',up:'월급',flat:'통장 잔고',bottom:'<span class="y">왜</span> 그대로일까요?'},
+ {type:'rows',a:8.5,b:19.0,mark:'warn',kicker:'이유는 3가지',title:'여기서 새고 있어요',rows:[{t:'고정 지출이 새고 있어요',s:'보험료·구독·대출 이자'},{t:'목적 없는 돈이 섞여요',s:'비상금·노후·목돈이 한 통장에'},{t:'순서가 없어요',s:'뭐부터 해야 할지 모르고 시작해요'}]},
+ {type:'lines',a:18.9,b:23.0,y0:340,lines:[{h:'순서만 잡아도',size:46},{h:'돈의 흐름이',size:46},{h:'달라져요',size:62,cls:'y'}]},
+ {type:'cta',a:22.9,b:28.1,head:'내 순서가 궁금하다면?',pill:'무료 상담 신청',l2:'지금 먼저 할 것부터',l3:'프로필 링크에서'}]},
+4:{d:27,tag:'라플연 직업별 시리즈 · 자영업자 편',scenes:[
+ {type:'hook',a:0,b:3.7,icon:'store',lines:[{h:'사장님,',size:46},{h:'개인 돈과 사업 돈',size:44},{h:'섞여 있죠?',size:62,cls:'y'}]},
+ {type:'chips',a:3.6,b:9.4,cap:'한꺼번에 신경 써야 해요',items:['운영 자금','대출','세금','노후'],bottom:'<span class="y">전부</span> 따로 챙기고 계세요?'},
+ {type:'lines',a:9.3,b:13.8,y0:330,lines:[{h:'따로따로 물어보면',size:44},{h:'서로 안 맞는 답이',size:44,cls:'y'},{h:'나올 수 있어요',size:44}]},
+ {type:'venn',a:13.7,b:20.8,split:16.6,la:'개인',lb:'사업',cap1:'개인 자산 + 사업 자금',cap2:'나눠서 <span class="y">한 번에</span> 봅니다'},
+ {type:'cta',a:20.7,b:27.1,head:'사장님·대표님이라면?',pill:'무료 상담 신청',l2:'자영업·법인 자금 컨설팅',l3:'프로필 링크에서'}]},
+5:{d:28,tag:'라플연 · 노후 준비',scenes:[
+ {type:'hook',a:0,b:3.7,icon:'clock',lines:[{h:'연금,',size:56},{h:'나중에 얼마 받는지',size:42},{h:'알고 계세요?',size:58,cls:'y'}]},
+ {type:'stack',a:3.6,b:11.7,cap:'<span class="y">다 합치면</span> 월 얼마?',segs:['국민연금','퇴직연금','개인연금'],total:'월 <span class="y">? ? ?</span> 원'},
+ {type:'lines',a:11.6,b:16.7,y0:330,lines:[{h:'자녀에게 물려줄 때',size:44},{h:'세금이 얼마인지도',size:44},{h:'모르는 분이 많아요',size:44,cls:'y'}]},
+ {type:'lines',a:16.6,b:20.8,y0:340,lines:[{h:'모르면',size:50},{h:'준비도 못 해요',size:60,cls:'y'},{h:'먼저 내 숫자부터 확인하세요',size:24,cls:'dim',gap:10}]},
+ {type:'cta',a:20.7,b:28.1,head:'내 숫자, 확인해볼까요?',pill:'무료 상담 신청',l2:'노후·상속·절세 플랜',l3:'프로필 링크에서'}]},
+6:{d:26.5,tag:'라플연 · 상담 안내',scenes:[
+ {type:'hook',a:0,b:3.6,icon:'chat',lines:[{h:'상담받으면',size:46},{h:'보험 가입해야 하나요?',size:40,cls:'y'}]},
+ {type:'stamp',a:3.5,b:7.0,text:'아니요',sub:'상담만 받고 끝나셔도 돼요'},
+ {type:'rows',a:6.9,b:16.9,kicker:'라플연 상담은',title:'이렇게 진행해요',rows:[{t:'지금 괜찮으면 그대로',s:'괜찮다면 유지하시라고 말씀드려요'},{t:'카톡으로만 진행 가능',s:'전화가 부담스러우면 카톡·문자로'},{t:'원치 않으면 연락 없음',s:'개인정보는 상담 목적으로만 사용'}]},
+ {type:'lines',a:16.8,b:21.0,y0:340,lines:[{h:'한 분 한 분 꼼꼼히',size:44},{h:'보려고 주간 상담 인원을',size:34},{h:'정해서 받고 있어요',size:50,cls:'y'}]},
+ {type:'cta',a:20.9,b:26.6,head:'부담 없이 시작하세요',pill:'무료 상담 신청',l2:'카톡으로 편하게',l3:'프로필 링크에서'}]}
+}[R];
+
+window.DURATION=CFG.d;
+$('tag').textContent=CFG.tag||'';
+const ups=CFG.scenes.map(S=>{const el=mk(stage,'scene',{});stage.insertBefore(el,$('tag'));const u=B[S.type](S,el);return {S,el,u}});
+window.render=function(t){
+  $('b1').style.left=(-60+Math.sin(t*.5)*60)+'px';$('b1').style.top=(80+Math.cos(t*.4)*60)+'px';
+  $('b2').style.left=(300+Math.cos(t*.45)*50)+'px';$('b2').style.top=(620+Math.sin(t*.5)*50)+'px';
+  ups.forEach(({S,el,u},i)=>{const f=i===0?.01:.25;const o=Math.min(lin(t,S.a,S.a+f),i===ups.length-1?1:1-lin(t,S.b-.25,S.b));el.style.opacity=o;el.style.visibility=o>0?'visible':'hidden';if(o>0)u(t)});
+  $('tag').style.opacity=lin(t,0,.5);
+};
+window.render(0);
+</script></body></html>
