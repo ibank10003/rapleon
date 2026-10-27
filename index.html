@@ -516,6 +516,59 @@ let materialKey = "insurance";
   if (materialKey !== "insurance") document.getElementById("heroMaterial").hidden = true;
 })();
 
+// 방문·행동 기록 → 구글 시트 "방문로그" 탭 + 메타 픽셀 맞춤 이벤트
+// 이름·연락처는 보내지 않음. 방문자ID는 이 브라우저에서 만든 무작위 값
+const track = (function () {
+  const rid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let vid = "", first = false, sid = "";
+  try {
+    vid = localStorage.getItem("rp_vid") || "";
+    if (!vid) { vid = rid(); first = true; localStorage.setItem("rp_vid", vid); }
+    sid = sessionStorage.getItem("rp_sid") || "";
+    if (!sid) { sid = rid(); sessionStorage.setItem("rp_sid", sid); }
+  } catch (e) { vid = vid || rid(); sid = sid || rid(); }
+  const device = /Instagram/i.test(navigator.userAgent) ? "instagram_app"
+    : /KAKAOTALK/i.test(navigator.userAgent) ? "kakao_app"
+    : /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "mobile" : "pc";
+  const sent = {};
+  return function (event, value, once) {
+    if (once && sent[event]) return;
+    sent[event] = true;
+    const body = JSON.stringify({ type: "event", event, value: value == null ? "" : String(value),
+      material: materialKey, vid, sid, first, device,
+      page: location.origin + location.pathname, ...source });
+    if (CONFIG.endpoint) {
+      try {
+        const blob = new Blob([body], { type: "text/plain;charset=utf-8" });
+        if (!navigator.sendBeacon || !navigator.sendBeacon(CONFIG.endpoint, blob)) {
+          fetch(CONFIG.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: true }).catch(() => {});
+        }
+      } catch (e) {}
+    }
+    if (window.fbq && event !== "page_view" && event !== "lead") {
+      fbq("trackCustom", event, { material: materialKey, campaign: source.utm_campaign, src: source.src });
+    }
+  };
+})();
+track("page_view", "", true);
+document.querySelectorAll('a[href="#apply"]').forEach(a =>
+  a.addEventListener("click", () => track("cta_click", a.id || "sticky")));
+document.getElementById("leadForm").addEventListener("focusin", () => track("form_start", "", true));
+document.getElementById("doneMaterial").addEventListener("click", () => track("pdf_download", materialKey));
+document.getElementById("kakaoBtn").addEventListener("click", () => track("kakao_click"));
+(function () {
+  const t0 = Date.now();
+  window.addEventListener("scroll", () => {
+    const r = (scrollY + innerHeight) / document.documentElement.scrollHeight;
+    if (r >= 0.5) track("scroll_50", "", true);
+    if (r >= 0.9) track("scroll_90", "", true);
+  }, { passive: true });
+  // 머문 시간(초). 화면을 떠날 때 한 번만
+  const leave = () => track("leave", Math.round((Date.now() - t0) / 1000), true);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") leave(); });
+  window.addEventListener("pagehide", leave);
+})();
+
 // 하단 고정 버튼: 신청서 보이면 숨김
 const sticky = document.getElementById("sticky");
 new IntersectionObserver(([e]) => sticky.classList.toggle("hide", e.isIntersecting), { threshold: 0.05 })
@@ -576,7 +629,8 @@ form.addEventListener("submit", async (e) => {
     } else {
       console.log("[테스트 모드] 저장될 데이터:", data);
     }
-    if (window.fbq) fbq("track", "Lead");
+    if (window.fbq) fbq("track", "Lead", { content_name: materialKey, content_category: source.utm_campaign });
+    track("lead", materialKey);
     form.style.display = "none";
     document.getElementById("doneName").textContent = name;
     document.getElementById("doneContact").textContent = data.contact;
