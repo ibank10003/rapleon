@@ -359,7 +359,8 @@ const MATERIALS = {
   resign:    { name: "퇴사 전 체크리스트",          file: "resign-checklist.pdf",       download: "퇴사전-체크리스트.pdf" },
   invest:    { name: "투자 전 체크리스트",          file: "invest-checklist.pdf",       download: "투자전-체크리스트.pdf" },
   retire:    { name: "노후 1장 정리표",             file: "retirement-1page-sheet.pdf", download: "노후-1장-정리표.pdf" },
-  subsidy:   { name: "지원금 조회 체크리스트",      file: "subsidy-checklist.pdf",      download: "지원금-조회-체크리스트.pdf" }
+  subsidy:   { name: "지원금 조회 체크리스트",      file: "subsidy-checklist.pdf",      download: "지원금-조회-체크리스트.pdf" },
+  sidejob:   { name: "부업 시작 체크리스트",        file: "sidejob-checklist.pdf",      download: "부업-시작-체크리스트.pdf" }
 };
 
 /* 댓글 키워드·광고별 첫 화면 문구
@@ -426,6 +427,15 @@ const VARIANTS = {
     cta: "지원금 조회 체크리스트 받기",
     customerType: "",
     interests: ["전체 자산 진단", "저축"]
+  },
+  부업: {
+    match: ["sidejob", "부업"],
+    material: "sidejob",
+    title: '부업 시작 전,<br><span class="hl">이 7가지</span>부터<br>체크하셨나요?',
+    sub: '3개월 버티기, 작게 팔아보기, 본업 지키기까지 <b>부업 시작 체크리스트</b> 한 장으로 점검하세요. 부업 수입이 생기면 세금·건강보험료가 어떻게 바뀌는지는 무료 상담에서 내 기준으로 계산해 드립니다.',
+    cta: "부업 시작 체크리스트 받기",
+    customerType: "",
+    interests: ["절세", "전체 자산 진단"]
   }
 };
 /* ========================================================= */
