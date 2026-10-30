@@ -366,7 +366,8 @@ const MATERIALS = {
   claim:     { name: "보험금 청구 서류 확인표",     file: "claim-checklist.pdf",        download: "보험금청구-서류-확인표.pdf" },
   yearend:   { name: "연말정산 미리 점검표",        file: "yearend-checklist.pdf",      download: "연말정산-미리-점검표.pdf" },
   saving:    { name: "적금 점검표 · 내 돈 나눠 담기", file: "saving-checklist.pdf",      download: "적금-점검표.pdf" },
-  inherit:   { name: "부모님 집 상속 준비 점검표",  file: "inherit-checklist.pdf",      download: "상속-준비-점검표.pdf" }
+  inherit:   { name: "부모님 집 상속 준비 점검표",  file: "inherit-checklist.pdf",      download: "상속-준비-점검표.pdf" },
+  salary:    { name: "연봉협상 준비 체크리스트",    file: "salary-checklist.pdf",       download: "연봉협상-준비-체크리스트.pdf" }
 };
 
 /* 댓글 키워드·광고별 첫 화면 문구
@@ -496,6 +497,15 @@ const VARIANTS = {
     cta: "상속 무료 상담 받기",
     customerType: "",
     interests: ["상속·증여", "부동산·대출"]
+  },
+  연봉: {
+    match: ["salary", "연봉"],
+    material: "salary",
+    title: '같이 일하는데 연봉이 다른 이유,<br><span class="hl">협상 준비</span>에서<br>갈립니다',
+    sub: '시장 연봉 확인부터 성과 숫자 정리, 다른 선택지까지 <b>연봉협상 준비 체크리스트</b> 한 장으로 준비하세요. 오른 연봉의 실수령액·세금·퇴직연금은 무료 상담에서 같이 계산해 드립니다.',
+    cta: "연봉협상 준비 체크리스트 받기",
+    customerType: "직장인",
+    interests: ["절세", "전체 자산 진단"]
   }
 };
 /* ========================================================= */
