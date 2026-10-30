@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사장님 유튜브 숏폼 제작 대행 | 주유장 라이프플랜연구소</title>
+<meta name="description" content="이미 찍어 둔 유튜브 롱폼 영상으로 쇼츠·릴스를 만들어 드립니다. 영상 링크만 남기면 무료 샘플 1개를 먼저 보내드립니다.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6f8;
+    --text: #17191c;
+    --text-sub: #5b6470;
+    --line: #e3e7ec;
+    --brand: #1f6feb;
+    --brand-dark: #1557c0;
+    --accent: #ff5a36;
+    --ok: #12a150;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.65;
+    word-break: keep-all;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; }
+  section.soft { background: var(--bg-soft); }
+  h1, h2, h3 { line-height: 1.35; margin: 0 0 16px; }
+  h1 { font-size: 30px; font-weight: 800; }
+  h2 { font-size: 24px; font-weight: 800; }
+  h3 { font-size: 18px; font-weight: 700; }
+  p { margin: 0 0 14px; color: var(--text-sub); font-size: 17px; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 700; color: var(--brand);
+    background: #e8f0fe; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .hl { color: var(--accent); }
+  .btn {
+    display: block; width: 100%; text-align: center; border: 0; cursor: pointer;
+    background: var(--brand); color: #fff; font: inherit; font-size: 18px; font-weight: 700;
+    padding: 18px 20px; border-radius: var(--radius); text-decoration: none;
+  }
+  .btn:hover { background: var(--brand-dark); }
+  .btn[disabled] { opacity: .6; cursor: default; }
+  .hero { padding-top: 40px; }
+  .hero .sub { font-size: 18px; }
+  .seats {
+    display: flex; align-items: center; gap: 10px; margin: 20px 0;
+    padding: 14px 16px; border: 1px solid #ffd2c7; background: #fff4f1; border-radius: var(--radius);
+    font-weight: 700; color: #b8371a;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .list li {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 18px; font-size: 16px;
+  }
+  .list li b { display: block; font-size: 17px; margin-bottom: 4px; color: var(--text); }
+  .check li { padding-left: 48px; position: relative; }
+  .check li::before {
+    content: "✓"; position: absolute; left: 16px; top: 15px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--ok); color: #fff; font-size: 13px; font-weight: 800;
+    display: grid; place-items: center;
+  }
+  .steps { counter-reset: s; }
+  .steps li { padding-left: 56px; position: relative; }
+  .steps li::before {
+    counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px;
+    width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff;
+    font-weight: 800; font-size: 14px; display: grid; place-items: center;
+  }
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 700; font-size: 17px; cursor: pointer; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "Q. "; color: var(--brand); }
+  .faq details p { margin: 10px 0 0; font-size: 16px; }
+
+  /* 요금제 */
+  .plans { display: grid; gap: 12px; }
+  .plan {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px;
+    position: relative;
+  }
+  .plan.best { border: 2px solid var(--brand); }
+  .plan .tag {
+    position: absolute; top: -11px; right: 16px; background: var(--brand); color: #fff;
+    font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+  }
+  .plan h3 { margin: 0 0 4px; font-size: 17px; }
+  .plan .price { font-size: 26px; font-weight: 800; color: var(--text); }
+  .plan .price small { font-size: 15px; font-weight: 600; color: var(--text-sub); }
+  .plan p { font-size: 15px; margin: 6px 0 0; }
+  .plan-note { font-size: 13px; margin-top: 12px; }
+
+  /* 신청서 */
+  .form-card { background: #fff; border: 2px solid var(--brand); border-radius: 18px; padding: 24px 20px; }
+  .field { margin-bottom: 18px; }
+  .field > label, .field > .label { display: block; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  .field .hint { font-size: 13px; color: var(--text-sub); margin: 6px 0 0; }
+  .req { color: var(--accent); }
+  input[type=text], input[type=tel], input[type=url], select {
+    width: 100%; font: inherit; font-size: 17px; padding: 14px; border: 1px solid #cfd6de;
+    border-radius: 10px; background: #fff; color: var(--text);
+  }
+  input:focus, select:focus { outline: 2px solid var(--brand); outline-offset: 1px; border-color: transparent; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label {
+    border: 1px solid #cfd6de; border-radius: 999px; padding: 9px 14px; font-size: 15px; cursor: pointer; user-select: none;
+  }
+  .chips input { position: absolute; opacity: 0; pointer-events: none; }
+  .chips label:has(input:checked) { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .consent { background: var(--bg-soft); border-radius: 10px; padding: 14px; font-size: 14px; color: var(--text-sub); }
+  .consent label { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--text); font-weight: 600; cursor: pointer; }
+  .consent label + label, .consent details + .err + label { margin-top: 10px; }
+  .consent input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; }
+  .consent details { margin-top: 8px; }
+  .consent summary { cursor: pointer; font-size: 13px; }
+  .consent table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .consent th, .consent td { border: 1px solid var(--line); padding: 6px; text-align: left; vertical-align: top; }
+  .err { color: #d0302f; font-size: 14px; margin-top: 6px; display: none; }
+  .field.invalid .err, .sub-check.invalid .err { display: block; }
+  .field.invalid input, .field.invalid select { border-color: #d0302f; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .done { display: none; text-align: center; padding: 20px 0; }
+  .done .big { font-size: 56px; }
+  .notice { font-size: 13px; color: var(--text-sub); margin-top: 14px; text-align: center; }
+
+  /* 하단 고정 버튼 */
+  .sticky {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.96); border-top: 1px solid var(--line); z-index: 10;
+    transition: transform .2s;
+  }
+  .sticky.hide { transform: translateY(110%); }
+  .sticky .btn { max-width: 528px; margin: 0 auto; }
+  footer { padding: 32px 0 120px; font-size: 13px; color: var(--text-sub); text-align: center; }
+  footer p { font-size: 13px; margin: 0 0 6px; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 8px; }
+  .compare div {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px;
+    font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4;
+  }
+  .compare div small { display: block; font-weight: 500; color: var(--text-sub); font-size: 13px; margin-top: 2px; }
+  .test-banner { background: #fff3cd; color: #7a5b00; font-size: 13px; text-align: center; padding: 8px; display: none; }
+</style>
+</head>
+<body>
+<div class="test-banner" id="testBanner">테스트 모드: 숏폼 신청용 구글 시트 주소가 아직 설정되지 않아 신청 내용이 저장되지 않습니다.</div>
+
+<!-- 1. 후킹 -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">사장님 유튜브 숏폼 제작 대행</span>
+    <h1>열심히 찍은 롱폼 영상,<br><span class="hl">쇼츠로 한 번 더</span><br>일하게 만드세요</h1>
+    <p class="sub">이미 올린 유튜브 영상에서 핵심만 잘라 <b>쇼츠·릴스</b>로 만들어 드립니다. 새로 촬영할 필요 없이, <b>영상 링크 하나</b>만 남겨 주세요.</p>
+    <div class="seats"><span class="dot"></span><span>이번 주 무료 샘플 제작 <b data-c="seats">5</b>곳 남음</span></div>
+    <a class="btn" href="#apply" id="heroCta">무료 샘플 숏폼 1개 받아보기</a>
+    <p class="notice" style="margin-top:8px">샘플이 마음에 들지 않으면 그대로 끝입니다. 비용은 없습니다.</p>
+  </div>
+</section>
+
+<!-- 2. 문제점 -->
+<section class="soft">
+  <div class="wrap">
+    <h2>영상은 꾸준히 올리는데,<br>왜 조회수가 안 늘까요?</h2>
+    <ul class="list">
+      <li><b>롱폼은 끝까지 보는 사람이 적다</b>처음 보는 손님은 10분짜리 영상을 누르지 않습니다. 먼저 짧게 알아야 들어옵니다</li>
+      <li><b>쇼츠를 만들 시간이 없다</b>가게 운영하면서 영상 고르고, 자르고, 자막 넣기까지 하기는 어렵습니다</li>
+      <li><b>좋은 장면이 영상 속에 묻혀 있다</b>이미 찍어 둔 영상 안에 손님이 궁금해할 30초가 여러 개 있습니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. 해결책 -->
+<section>
+  <div class="wrap">
+    <h2>찍어 둔 영상에서<br><span class="hl">쇼츠를 뽑아 드립니다</span></h2>
+    <div class="compare">
+      <div>원본은 그대로<small>새 촬영 없이 기존 영상 활용</small></div>
+      <div>세로 9:16 편집<small>쇼츠·릴스·틱톡 규격</small></div>
+      <div>자막·제목 문구<small>처음 3초에 멈추게</small></div>
+      <div>업로드 지원<small>성장형 요금제</small></div>
+    </div>
+    <ul class="list steps" style="margin-top:24px">
+      <li><b>영상 링크 남기기 (1분)</b>쇼츠로 만들고 싶은 유튜브 영상이나 채널 주소를 아래에 붙여 넣어 주세요</li>
+      <li><b>무료 샘플 1개 받기</b>영업일 기준 2일 안에 카카오톡이나 문자로 샘플 숏폼을 보내드립니다</li>
+      <li><b>마음에 들면 요금제 선택</b>체험형부터 시작해도 되고, 맞지 않으면 그대로 끝내셔도 됩니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. 요금제 -->
+<section class="soft" id="plans">
+  <div class="wrap">
+    <h2>요금제</h2>
+    <p>처음에는 체험형으로 결과를 먼저 보시는 걸 권합니다.</p>
+    <div class="plans">
+      <div class="plan">
+        <h3>체험형</h3>
+        <div class="price">15만원 <small>/ 1회</small></div>
+        <p>숏폼 3개 · 한 번만 이용</p>
+      </div>
+      <div class="plan best">
+        <span class="tag">추천</span>
+        <h3>월 기본형</h3>
+        <div class="price">39만원 <small>/ 월</small></div>
+        <p>숏폼 8개 · 주 2회 올릴 분량</p>
+      </div>
+      <div class="plan">
+        <h3>월 성장형</h3>
+        <div class="price">69만원 <small>/ 월</small></div>
+        <p>숏폼 16개 · 업로드 지원 포함</p>
+      </div>
+    </div>
+    <p class="plan-note">오픈 기념 시험 가격입니다. 부가세 포함 여부, 수정 횟수, 납품 일정은 계약 전에 서면으로 안내드립니다.</p>
+  </div>
+</section>
+
+<!-- 5. 신청서 -->
+<section id="apply">
+  <div class="wrap">
+    <h2>무료 샘플 숏폼 신청</h2>
+    <p>샘플은 직접 영상을 보고 만들기 때문에 주간 제작 수를 정해서 받고 있습니다.</p>
+    <div class="seats"><span class="dot"></span><span>이번 주 남은 자리 <b data-c="seats">5</b>곳</span></div>
+
+    <div class="form-card">
+      <form id="shortsForm" novalidate>
+        <div class="field" data-f="videoUrl">
+          <label for="videoUrl">유튜브 영상 또는 채널 주소 <span class="req">*</span></label>
+          <input id="videoUrl" name="videoUrl" type="url" inputmode="url" placeholder="https://youtu.be/... 또는 https://youtube.com/@채널" maxlength="300">
+          <p class="hint">샘플로 만들고 싶은 영상 하나를 붙여 넣어 주세요. 채널 주소를 주시면 저희가 골라 드립니다.</p>
+          <div class="err">유튜브 영상이나 채널 주소를 넣어 주세요.</div>
+        </div>
+        <div class="field" data-f="name">
+          <label for="name">이름 또는 상호 <span class="req">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="홍길동 / ○○식당" maxlength="40">
+          <div class="err">이름이나 상호를 입력해주세요.</div>
+        </div>
+        <div class="field" data-f="phone">
+          <label for="phone">연락처 <span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="010-1234-5678" maxlength="13">
+          <div class="err">휴대폰 번호를 정확히 입력해주세요.</div>
+        </div>
+        <div class="field" data-f="industry">
+          <label for="industry">업종 <span class="req">*</span></label>
+          <select id="industry" name="industry">
+            <option value="">선택해주세요</option>
+            <option>음식점·카페</option><option>병원·한의원·약국</option><option>학원·교육</option><option>뷰티·미용</option>
+            <option>인테리어·건설</option><option>부동산</option><option>전문직(세무·법무 등)</option><option>쇼핑몰·제조</option><option>기타</option>
+          </select>
+          <div class="err">업종을 선택해주세요.</div>
+        </div>
+        <div class="field">
+          <span class="label">관심 있는 요금제</span>
+          <div class="chips">
+            <label><input type="radio" name="plan" value="아직 모름" checked>아직 모름</label>
+            <label><input type="radio" name="plan" value="체험형">체험형</label>
+            <label><input type="radio" name="plan" value="월 기본형">월 기본형</label>
+            <label><input type="radio" name="plan" value="월 성장형">월 성장형</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">샘플 받을 방법</span>
+          <div class="chips">
+            <label><input type="radio" name="contact" value="카카오톡" checked>카카오톡</label>
+            <label><input type="radio" name="contact" value="문자">문자</label>
+            <label><input type="radio" name="contact" value="전화">전화</label>
+          </div>
+        </div>
+        <div class="hp" aria-hidden="true"><label>회사 <input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+
+        <div class="field consent">
+          <div class="sub-check" data-f="rights">
+            <label><input type="checkbox" id="rights" name="rights"> [필수] 남긴 영상은 본인(또는 우리 사업체)이 올린 영상이며, 샘플 제작을 위해 편집하는 것에 동의합니다.</label>
+            <div class="err">본인 영상인지 확인해주세요.</div>
+          </div>
+          <div class="sub-check" data-f="agree" style="margin-top:10px">
+            <label><input type="checkbox" id="agree" name="agree"> [필수] 개인정보 수집·이용에 동의합니다.</label>
+            <details>
+              <summary>내용 보기</summary>
+              <table>
+                <tr><th>수집 항목</th><td>이름 또는 상호, 연락처, 업종, 영상·채널 주소, 관심 요금제, 연락 방법</td></tr>
+                <tr><th>이용 목적</th><td>숏폼 샘플 제작·전달 및 제작 대행 계약 안내 (금융상품 안내에는 쓰지 않습니다)</td></tr>
+                <tr><th>보유 기간</th><td>신청일로부터 1년 또는 삭제 요청 시 즉시 파기 (계약 시 계약 기간 동안)</td></tr>
+              </table>
+              <p style="font-size:13px;margin:8px 0 0">동의를 거부할 수 있으나, 거부 시 샘플 신청이 제한됩니다.</p>
+            </details>
+            <div class="err">개인정보 수집·이용에 동의해주세요.</div>
+          </div>
+          <label style="margin-top:10px;font-weight:500"><input type="checkbox" id="marketing" name="marketing"> [선택] 숏폼·마케팅 팁과 할인 소식(문자/카카오톡) 수신에 동의합니다.</label>
+        </div>
+
+        <button class="btn" type="submit" id="submitBtn">무료 샘플 신청하기</button>
+        <p class="notice">영업일 기준 2일 안에 샘플을 보내드립니다. 샘플을 받은 뒤 계약하지 않으셔도 됩니다.</p>
+      </form>
+
+      <div class="done" id="done">
+        <div class="big">🎬</div>
+        <h3>샘플 신청이 접수되었습니다</h3>
+        <p><b id="doneName"></b>님, 영상을 확인한 뒤 <b id="doneContact">카카오톡</b>으로 샘플을 보내드리겠습니다.<br>모르는 번호라도 꼭 확인 부탁드려요.</p>
+        <a class="btn" id="kakaoBtn" href="#" target="_blank" rel="noopener" hidden>카카오톡 채널 바로가기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq soft">
+  <div class="wrap">
+    <h2>자주 묻는 질문</h2>
+    <details><summary>샘플은 정말 무료인가요?</summary><p>네. 샘플 1개는 비용이 없고, 받아보신 뒤 계약하지 않으셔도 됩니다.</p></details>
+    <details><summary>새로 촬영해야 하나요?</summary><p>아닙니다. 이미 유튜브에 올리신 영상을 그대로 활용합니다. 롱폼 영상이 많을수록 만들 수 있는 쇼츠도 많아집니다.</p></details>
+    <details><summary>만든 쇼츠는 누구 것인가요?</summary><p>완성된 영상은 사장님 채널에서 자유롭게 쓰실 수 있습니다. 원본 영상의 권리는 그대로 사장님께 있습니다.</p></details>
+    <details><summary>보험이나 대출 상담을 받아야 하나요?</summary><p>아닙니다. 숏폼 제작은 금융상품과 관계없는 별도 서비스이며, 금융 상담이나 가입이 조건이 아닙니다. 따로 원하실 때만 별도로 신청하시면 됩니다.</p></details>
+    <details><summary>병원·약국도 맡길 수 있나요?</summary><p>가능합니다. 다만 의료광고 기준에 맞지 않는 표현(치료 효과 보장, 전후 비교 등)은 넣지 않고 편집합니다.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p data-c="footer">주유장 라이프플랜연구소 · 숏폼 제작 대행</p>
+    <p>숏폼 제작 대행은 금융상품 판매·권유와 무관한 독립 용역 서비스입니다. 신청 정보는 금융상품 안내에 쓰지 않습니다.</p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 샘플 숏폼 받기 (남은 자리 <span data-c="seats">5</span>곳)</a></div>
+
+<script>
+/* =========================================================
+   여기만 바꾸면 됩니다 (숏폼-설치가이드.md 참고)
+   금융 상담(index.html)과 고객 DB를 섞지 않도록, 숏폼 전용 시트의 주소를 따로 넣습니다.
+   ========================================================= */
+const CONFIG = {
+  // 숏폼 전용 구글 Apps Script 웹앱 주소 (비워두면 테스트 모드)
+  endpoint: "",
+  seats: 5,                  // 희소성 문구 "남은 자리 N곳"
+  kakaoChannelUrl: "",       // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
+  footer: "주유장 라이프플랜연구소 · 숏폼 제작 대행",
+  metaPixelId: "2570324423436600"  // 메타 픽셀 ID (숫자), 비워두면 픽셀 미사용
+};
+
+document.querySelectorAll("[data-c]").forEach(el => {
+  const v = CONFIG[el.dataset.c];
+  if (v !== undefined && v !== "") el.textContent = v;
+});
+if (!CONFIG.endpoint) document.getElementById("testBanner").style.display = "block";
+
+// Meta 픽셀
+if (CONFIG.metaPixelId) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', CONFIG.metaPixelId);
+  fbq('track', 'PageView');
+}
+
+// 유입 경로 (DM·광고 링크에 ?src=dm&utm_campaign=... 붙이면 시트에 같이 저장)
+const params = new URLSearchParams(location.search);
+const source = {
+  src: params.get("src") || "",
+  utm_source: params.get("utm_source") || "",
+  utm_medium: params.get("utm_medium") || "",
+  utm_campaign: params.get("utm_campaign") || "",
+  utm_content: params.get("utm_content") || "",
+  referrer: document.referrer || ""
+};
+// 제안 DM에 ?ch=채널주소 를 붙여 보내면 영상 칸이 미리 채워짐
+if (params.get("ch")) document.getElementById("videoUrl").value = params.get("ch");
+
+// 하단 고정 버튼: 신청서 보이면 숨김
+const sticky = document.getElementById("sticky");
+new IntersectionObserver(([e]) => sticky.classList.toggle("hide", e.isIntersecting), { threshold: 0.05 })
+  .observe(document.getElementById("apply"));
+
+// 연락처 자동 하이픈
+const phone = document.getElementById("phone");
+phone.addEventListener("input", () => {
+  const d = phone.value.replace(/\D/g, "").slice(0, 11);
+  phone.value = d.length < 4 ? d : d.length < 8 ? `${d.slice(0,3)}-${d.slice(3)}` : `${d.slice(0,3)}-${d.slice(3, d.length - 4)}-${d.slice(-4)}`;
+});
+
+const form = document.getElementById("shortsForm");
+const btn = document.getElementById("submitBtn");
+
+function setInvalid(key, bad) {
+  form.querySelector(`[data-f="${key}"]`).classList.toggle("invalid", bad);
+  return bad;
+}
+
+// youtube.com, youtu.be, m.youtube.com 주소만 받음 (http 없이 붙여 넣어도 허용)
+function isYoutubeUrl(v) {
+  try {
+    const u = new URL(/^https?:\/\//i.test(v) ? v : "https://" + v);
+    return /(^|\.)youtube\.com$|^youtu\.be$/i.test(u.hostname);
+  } catch (e) { return false; }
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const videoUrl = (fd.get("videoUrl") || "").trim();
+  const name = (fd.get("name") || "").trim();
+  const phoneDigits = (fd.get("phone") || "").replace(/\D/g, "");
+  let bad = false;
+  bad = setInvalid("videoUrl", !isYoutubeUrl(videoUrl)) || bad;
+  bad = setInvalid("name", name.length < 2) || bad;
+  bad = setInvalid("phone", !/^01[016789]\d{7,8}$/.test(phoneDigits)) || bad;
+  bad = setInvalid("industry", !fd.get("industry")) || bad;
+  bad = setInvalid("rights", !document.getElementById("rights").checked) || bad;
+  bad = setInvalid("agree", !document.getElementById("agree").checked) || bad;
+  if (bad) {
+    form.querySelector(".invalid").scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  const data = {
+    type: "shorts_lead",
+    videoUrl,
+    name,
+    phone: fd.get("phone"),
+    industry: fd.get("industry"),
+    plan: fd.get("plan"),
+    contact: fd.get("contact"),
+    rights: "확인",
+    agree: "동의",
+    marketing: document.getElementById("marketing").checked ? "동의" : "미동의",
+    company: fd.get("company") || "",   // 스팸 방지용 숨김 칸
+    page: location.origin + location.pathname,
+    ...source
+  };
+
+  btn.disabled = true;
+  btn.textContent = "접수 중...";
+  try {
+    if (CONFIG.endpoint) {
+      await submitLead(data);
+    } else {
+      console.log("[테스트 모드] 저장될 데이터:", data);
+    }
+    if (window.fbq) fbq("track", "Lead", { content_name: "shorts", content_category: source.utm_campaign });
+    form.style.display = "none";
+    document.getElementById("doneName").textContent = name;
+    document.getElementById("doneContact").textContent = data.contact;
+    if (CONFIG.kakaoChannelUrl) {
+      const k = document.getElementById("kakaoBtn");
+      k.href = CONFIG.kakaoChannelUrl;
+      k.hidden = false;
+    }
+    document.getElementById("done").style.display = "block";
+  } catch (err) {
+    console.error("신청 저장 실패", err);
+    alert(CONFIG.kakaoChannelUrl
+      ? "일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도하시거나, 확인을 누르면 열리는 카카오톡 채널로 남겨주세요."
+      : "일시적인 오류로 접수되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    if (CONFIG.kakaoChannelUrl) window.open(CONFIG.kakaoChannelUrl, "_blank");
+    btn.disabled = false;
+    btn.textContent = "무료 샘플 신청하기";
+  }
+});
+
+// 구글 시트에 저장하고, 시트가 "저장됨(ok)"이라고 답할 때만 성공으로 봄. 실패하면 한 번 더 시도
+async function submitLead(data) {
+  const body = JSON.stringify(data);
+  let lastErr;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(CONFIG.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+      const result = await res.json();
+      if (result.ok) return;
+      lastErr = new Error(result.error || "저장 실패");
+      if (result.error === "invalid") break;
+    } catch (err) {
+      lastErr = err;
+    }
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  throw lastErr;
+}
+</script>
+</body>
+</html>
