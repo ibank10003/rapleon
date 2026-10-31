@@ -55,10 +55,10 @@
   .hero .sub { font-size: 18px; }
   .seats {
     display: flex; align-items: center; gap: 10px; margin: 20px 0;
-    padding: 14px 16px; border: 1px solid #ffd2c7; background: #fff4f1; border-radius: var(--radius);
-    font-weight: 700; color: #b8371a;
+    padding: 14px 16px; border: 1px solid var(--line, #e3e6ec); background: #f6f7fa; border-radius: var(--radius);
+    font-weight: 700; color: #3d434f;
   }
-  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; animation: pulse 1.4s infinite; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
   @keyframes pulse { 50% { opacity: .3; } }
   .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .list li {
@@ -161,7 +161,7 @@
     <span class="eyebrow" data-c="brand">주유장 라이프플랜연구소</span>
     <h1 id="heroTitle">보험, 연금, 투자, 부동산, 세금…<br><span class="hl">따로따로 물어보고</span><br>계시진 않나요?</h1>
     <p class="sub" id="heroSub">흩어진 내 자산을 한 번에 모아 점검해 드립니다. 직장인부터 자영업자, 법인 대표님까지 <b>무료 자산관리 상담</b>을 받아보세요.</p>
-    <div class="seats"><span class="dot"></span><span>이번 주 무료 상담 가능 인원 <b data-c="seats">2</b>명 남음</span></div>
+    <div class="seats"><span class="dot"></span><span>상담 비용 0원 · 가입 권유 없음 · 카톡으로만 진행 가능</span></div>
     <a class="btn" href="#apply" id="heroCta">무료 자산관리 상담 신청하기</a>
     <a class="dl" href="#apply" id="heroMaterial">📄 <span class="mName">내 보험 5분 점검 체크리스트</span> 무료로 받기</a>
     <p class="notice" style="margin-top:6px">아래 신청서를 남기시면 바로 받을 수 있어요.</p>
@@ -174,7 +174,7 @@
     <h2>열심히 모으는데,<br>왜 돈이 잘 안 불어날까요?</h2>
     <ul class="list">
       <li><b>자산이 여기저기 흩어져 있다</b>보험은 설계사에게, 적금은 은행에, 주식은 앱에. 전체 그림을 본 적이 없습니다</li>
-      <li><b>보험료가 생각보다 많이 나간다</b>소득 대비 보험료가 적정한지, 중복은 없는지 확인해본 적이 없습니다</li>
+      <li><b>아프면 모아 둔 돈부터 빠져나갈까 걱정된다</b>지금 보장이 오르는 의료비와 앞으로의 치료까지 감당해 모은 돈을 지켜 주는지 확인해본 적이 없습니다</li>
       <li><b>노후·상속·세금 준비가 막막하다</b>연금은 얼마나 받을지, 자녀에게 물려줄 때 세금은 얼마인지 모릅니다</li>
       <li><b>사업 자금이 늘 고민이다</b>자영업자·법인 대표님은 운영 자금, 정책자금, 절세까지 신경 쓸 게 너무 많습니다</li>
     </ul>
@@ -227,8 +227,7 @@
 <section id="apply">
   <div class="wrap">
     <h2>무료 자산관리 상담 신청</h2>
-    <p>자산관리는 <b>빨리 시작할수록</b> 선택지가 많아집니다. 한 분 한 분 꼼꼼히 보기 위해 주간 상담 인원을 정해서 받고 있습니다.</p>
-    <div class="seats"><span class="dot"></span><span>이번 주 남은 자리 <b data-c="seats">2</b>명</span></div>
+    <p>자산관리는 <b>빨리 시작할수록</b> 선택지가 많아집니다. 신청하신다고 바로 뭔가 결정하실 필요는 없습니다.</p>
 
     <div class="form-card">
       <form id="leadForm" novalidate>
@@ -327,7 +326,7 @@
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기 (남은 자리 <span data-c="seats">2</span>명)</a></div>
+<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기</a></div>
 
 <script>
 /* =========================================================
@@ -342,7 +341,6 @@ const CONFIG = {
   advisorIntro: "한 가지 상품만 권하지 않습니다. 보험부터 투자, 부동산, 세금까지 고객님의 자산 전체를 놓고, 지금 꼭 필요한 것과 하지 않아도 되는 것을 솔직하게 말씀드립니다.",
   advisorPhoto: "",          // 프로필 사진 주소 (비워두면 이름 첫 글자)
   youtubeId: "",             // 소개 영상 유튜브 ID (예: dQw4w9WgXcQ), 비워두면 숨김
-  seats: 2,                  // 희소성 문구 "남은 자리 N명"
   interests: ["전체 자산 진단", "보험 점검", "연금·노후", "저축", "주식·펀드", "상속·증여", "절세", "부동산", "자영업 자금", "법인 컨설팅"],
   kakaoChannelUrl: "",       // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
   footer: "주유장 라이프플랜연구소 · 대표 컨설턴트 주유장",
