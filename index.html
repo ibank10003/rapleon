@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>무료 자산관리 상담 | 주유장 라이프플랜연구소</title>
-<meta name="description" content="보험·연금·투자·부동산·세금까지, 흩어진 내 자산을 한 번에 무료로 점검해 드립니다.">
+<title>고민부터 무료 상담 | 주유장 라이프플랜연구소</title>
+<meta name="description" content="상품 이름은 몰라도 됩니다. 지금 신경 쓰이는 고민 하나만 고르면, 무엇부터 챙길지 순서를 같이 정리해 드립니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="주유장 라이프플랜연구소">
-<meta property="og:title" content="무료 자산관리 상담 | 주유장 라이프플랜연구소">
-<meta property="og:description" content="보험·연금·투자·부동산·세금까지, 흩어진 내 자산을 한 번에 무료로 점검해 드립니다.">
+<meta property="og:title" content="고민부터 무료 상담 | 주유장 라이프플랜연구소">
+<meta property="og:description" content="상품 이름은 몰라도 됩니다. 지금 신경 쓰이는 고민 하나만 고르면, 무엇부터 챙길지 순서를 같이 정리해 드립니다.">
+<script>
+  // 영상·광고 링크(?m= ?kw= ?utm_campaign=)로 오지 않았으면 "고민 고르기" 첫 화면을 보여줌
+  if (!/[?&](m|kw|utm_campaign)=/.test(location.search)) document.documentElement.classList.add("home");
+</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -158,6 +162,19 @@
   .routes a b { display: block; font-size: 17px; margin-bottom: 2px; }
   .routes a span { color: var(--text-sub); }
   .routes a::after { content: "→"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--brand); font-weight: 800; }
+  /* 첫 화면 모드 */
+  html.home .funnel { display: none !important; }
+  html:not(.home) .home-only { display: none !important; }
+  html.home .faq { background: var(--bg); }
+  .worries { display: grid; gap: 10px; margin-top: 20px; }
+  .worries a {
+    display: flex; align-items: center; gap: 14px; background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px 18px; color: var(--text); text-decoration: none;
+  }
+  .worries .ico { font-size: 26px; flex: none; }
+  .worries b { display: block; font-size: 17px; }
+  .worries small { display: block; font-size: 14px; color: var(--text-sub); }
+  .worries a.more { border-style: dashed; background: transparent; }
   .test-banner { background: #fff3cd; color: #7a5b00; font-size: 13px; text-align: center; padding: 8px; display: none; }
   /* 상단 메뉴 (세 페이지 공통) */
   .topnav { border-bottom: 1px solid var(--line); background: #fff; }
@@ -182,8 +199,32 @@
   </div>
 </header>
 
-<!-- 1. 후킹 + 표본 -->
-<section class="hero">
+<!-- 첫 화면 (링크 없이 들어온 분): 상품이 아니라 고민으로 -->
+<section class="hero home-only">
+  <div class="wrap">
+    <h1>요즘 어떤 게<br><span class="hl">가장 신경 쓰이세요?</span></h1>
+    <p class="sub">보험인지 대출인지, 상품 이름은 몰라도 됩니다. 고민 하나만 고르시면 무엇부터 챙길지 순서를 같이 정리해 드립니다.</p>
+    <div class="worries">
+      <a href="care.html?w=사업&amp;src=home#worry" data-w="사업"><span class="ico">🏪</span><span><b>사업이 힘들다</b><small>매출, 자금, 직원, 홍보</small></span></a>
+      <a href="care.html?w=건강&amp;src=home#worry" data-w="건강"><span class="ico">🩺</span><span><b>건강이 걱정된다</b><small>검진, 보장, 보험금 청구</small></span></a>
+      <a href="care.html?w=돈&amp;src=home#worry" data-w="돈"><span class="ico">💸</span><span><b>돈이 걱정된다</b><small>저축, 보험료, 대출</small></span></a>
+      <a href="care.html?w=집&amp;src=home#worry" data-w="집"><span class="ico">🏠</span><span><b>집 문제가 있다</b><small>내 집 마련, 전세, 대출 갈아타기</small></span></a>
+      <a href="care.html?w=노후&amp;src=home#worry" data-w="노후"><span class="ico">🌱</span><span><b>노후가 걱정된다</b><small>연금, 은퇴, 물려주기</small></span></a>
+      <a class="more" href="care.html?w=전체&amp;src=home#worry" data-w="전체"><span class="ico">❓</span><span><b>뭐부터 해야 할지 모르겠다</b><small>몇 가지만 답하면 전체를 같이 살펴봐요</small></span></a>
+    </div>
+    <p class="notice">상담 비용 0원 · 가입 권유 없음 · 카카오톡으로만 진행 가능</p>
+  </div>
+</section>
+<section class="home-only">
+  <div class="wrap">
+    <h2>가게 유튜브 영상이 있으세요?</h2>
+    <p>찍어 둔 영상에서 손님이 궁금해할 장면만 골라 쇼츠로 만들어 드립니다. 금융 상담과는 별개 서비스예요.</p>
+    <a class="btn" href="shorts.html?src=home">숏폼 무료 샘플 1개 받아보기</a>
+  </div>
+</section>
+
+<!-- 1. 후킹 + 표본 (영상·광고 링크로 온 분) -->
+<section class="funnel hero">
   <div class="wrap">
     <h1 id="heroTitle">보험, 연금, 투자, 부동산, 세금…<br><span class="hl">따로따로 물어보고</span><br>계시진 않나요?</h1>
     <p class="sub" id="heroSub">흩어진 내 자산을 한 번에 모아 점검해 드립니다. 직장인부터 자영업자, 법인 대표님까지 <b>무료 자산관리 상담</b>을 받아보세요.</p>
@@ -195,7 +236,7 @@
 </section>
 
 <!-- 2. 문제점 제시 -->
-<section class="soft">
+<section class="funnel soft">
   <div class="wrap">
     <h2>열심히 모으는데,<br>왜 돈이 잘 안 불어날까요?</h2>
     <ul class="list">
@@ -208,7 +249,7 @@
 </section>
 
 <!-- 3. 명확한 해결책 -->
-<section>
+<section class="funnel">
   <div class="wrap">
     <h2>한 곳에서, 한 번에<br><span class="hl">내 자산 전체를 봅니다</span></h2>
     <p>분야별로 따로 상담받을 필요 없이, 한 번의 상담으로 전체 자산을 진단하고 우선순위를 정리해 드립니다.</p>
@@ -250,7 +291,7 @@
 </section>
 
 <!-- 5. 희소성 + 6. CTA (신청서) -->
-<section id="apply">
+<section class="funnel" id="apply">
   <div class="wrap">
     <h2>무료 자산관리 상담 신청</h2>
     <p>이름과 연락처만 남겨 주시면 편한 방법으로 먼저 연락드립니다. 상담만 받고 끝나셔도 됩니다.</p>
@@ -345,7 +386,7 @@
   </div>
 </section>
 
-<section>
+<section class="funnel">
   <div class="wrap">
     <h2>이런 도움도 드려요</h2>
     <div class="routes">
@@ -365,7 +406,7 @@
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기</a></div>
+<div class="sticky funnel" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기</a></div>
 
 <script>
 /* =========================================================
@@ -686,6 +727,8 @@ document.querySelectorAll('a[href="#apply"]').forEach(a =>
 document.getElementById("leadForm").addEventListener("focusin", () => track("form_start", "", true));
 document.getElementById("doneMaterial").addEventListener("click", () => track("pdf_download", materialKey));
 document.getElementById("kakaoBtn").addEventListener("click", () => track("kakao_click"));
+document.querySelectorAll(".worries a").forEach(a => a.addEventListener("click", () => track("home_worry", a.dataset.w)));
+document.querySelector('.home-only a[href^="shorts.html"]').addEventListener("click", () => track("home_shorts"));
 (function () {
   const t0 = Date.now();
   window.addEventListener("scroll", () => {

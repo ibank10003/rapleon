@@ -769,6 +769,10 @@ async function submitLead(data) {
   }
   throw lastErr;
 }
+
+// 메인에서 고민을 골라 온 경우 (care.html?w=사업) 그 고민을 미리 골라 둠
+const wParam = params.get("w");
+if (wParam && WORRIES.some(w => w.key === wParam)) pickWorry(wParam, true);
 </script>
 </body>
 </html>
