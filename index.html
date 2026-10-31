@@ -656,6 +656,20 @@ const track = (function () {
     if (window.fbq && event !== "page_view" && event !== "lead") {
       fbq("trackCustom", event, { material: materialKey, campaign: source.utm_campaign, src: source.src });
     }
+    // goldsabu.com 전체 흐름판(/admin/site)에도 같은 행동을 남김 — 이름·연락처는 보내지 않음
+    try {
+      const v = value == null ? "" : String(value).slice(0, 40);
+      const G = { page_view: ["pv", { ref: (document.referrer || "").slice(0, 120) }], cta_click: ["click", { k: v, to: "#apply", cta: 1 }],
+        scroll_50: ["scroll", { d: 50 }], scroll_90: ["scroll", { d: 90 }], form_start: ["form_start", {}],
+        lead: ["lead_saved", { items: v }], leave: ["leave", { s: Number(value) || 0 }],
+        pdf_download: ["click", { k: "PDF " + v, to: "pdf" }], kakao_click: ["click", { k: "카카오톡", to: "kakao", out: 1 }] }[event];
+      if (G && navigator.sendBeacon) {
+        const u = [["source", source.src || source.utm_source || (document.referrer ? new URL(document.referrer).hostname.replace(/^www\.|^m\./, "") : "")],
+          ["campaign", source.utm_campaign], ["content", source.utm_content]].filter(x => x[1]).map(x => x[0] + "=" + x[1]).join("&") || "direct";
+        navigator.sendBeacon("https://goldsabu.com/api/ev", new Blob([JSON.stringify({ n: G[0], sid: ("r_" + vid).slice(0, 40),
+          p: ("/rapleon/" + materialKey).slice(0, 40), u: u.slice(0, 300), d: Object.assign({ hub: 1 }, G[1]), w: innerWidth })], { type: "text/plain" }));
+      }
+    } catch (e) {}
   };
 })();
 track("page_view", "", true);
