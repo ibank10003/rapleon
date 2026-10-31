@@ -115,6 +115,19 @@ header{
   display:grid; grid-template-columns:repeat(4,1fr); margin-top:84px;
   border-top:1px solid var(--line-dk);
 }
+.hero{padding-bottom:112px}
+.menus{display:grid; grid-template-columns:repeat(4,1fr); margin-top:64px; border-top:1px solid var(--line-dk); border-left:1px solid var(--line-dk)}
+.menu{display:flex; flex-direction:column; padding:28px 24px 26px; border-right:1px solid var(--line-dk); border-bottom:1px solid var(--line-dk)}
+.menu .mk{font-size:12.5px; font-weight:700; letter-spacing:.06em; color:var(--gold-lt)}
+.menu b{display:block; font-family:var(--serif); font-weight:600; font-size:19px; line-height:1.45; color:#f6f2e8; margin:14px 0 6px; letter-spacing:-.03em}
+.menu .mt{font-size:13px; color:#8fa198; margin-bottom:24px}
+.menu .btn{margin-top:auto; padding:14px 16px; font-size:15px}
+.more{margin-top:44px; border-top:1px solid var(--ink)}
+.more > summary{cursor:pointer; list-style:none; padding:22px 0; font-weight:600; color:var(--ink); display:flex; justify-content:space-between; border-bottom:1px solid var(--line)}
+.more > summary::-webkit-details-marker{display:none}
+.more > summary::after{content:"+"; color:var(--gold); font-family:var(--serif); font-size:22px; line-height:1}
+.more[open] > summary::after{content:"\2212"}
+.more .tgroup:first-of-type{margin-top:0; border-top:0}
 .chip{padding:22px 0 26px; font-size:14.5px; color:#d9e0db; border-right:1px solid var(--line-dk); padding-left:22px}
 .chip:first-child{padding-left:0}
 .chip:last-child{border-right:0}
@@ -346,6 +359,13 @@ footer a:hover{color:var(--gold-lt)}
   .spacer{display:block}
   .cta-row{gap:20px}
   .cta-row .btn{width:100%}
+  .hero{padding-bottom:72px}
+  .menus{grid-template-columns:1fr; margin-top:44px}
+  .menu{padding:22px 20px}
+  .menu b br{display:none}
+}
+@media (min-width:761px) and (max-width:960px){
+  .menus{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -368,20 +388,34 @@ footer a:hover{color:var(--gold-lt)}
 <section class="hero" id="top">
   <div class="wrap">
     <p class="kicker">LIFE PLAN LAB</p>
-    <h1 id="heroTitle">혼자 다 챙기다<br>꼭 <em>하나씩 놓칩니다</em></h1>
-    <p class="sub" id="heroSub">본업, 직원, 세금, 매출, 마케팅, 건강, 보험, 대출, 노후.<br><strong>전부 다 해드리겠다는 곳이 아닙니다.</strong> 놓치는 게 없도록 정리하고, 때가 되면 먼저 알려드립니다.</p>
+    <h1 id="heroTitle">콘텐츠·돈·사주,<br>내 고민 하나 고르면<br><em>무료로 먼저 해 드려요</em></h1>
 
-    <div class="cta-row">
-      <a class="btn btn-gold" href="#apply">내 상황 점검받기</a>
-      <a class="link" href="#worry">어떤 고민인지부터 고르기 →</a>
-    </div>
-    <p class="note">신청하시면 영업일 기준 24시간 안에 연락드립니다. 전화가 부담스러우시면 카카오톡으로만 진행합니다.</p>
-
-    <div class="chips">
-      <span class="chip">상담 비용 0원</span>
-      <span class="chip">가입 권유 없음</span>
-      <span class="chip">카카오톡으로만 진행 가능</span>
-      <span class="chip">잘하고 계신 건 그대로</span>
+    <!-- 메뉴 4개 · 메뉴마다 무료 행동 버튼 1개 (나머지 링크는 08 도구 섹션에 접어 둠) -->
+    <div class="menus">
+      <div class="menu">
+        <span class="mk">콘텐츠</span>
+        <b>내 영상으로 쇼츠 3개 <br>무료 진단</b>
+        <span class="mt">10분 · 하루 5건</span>
+        <a class="btn btn-gold btn-wide" href="/hub/p/shorts_free" data-menu="content">무료 진단 신청</a>
+      </div>
+      <div class="menu">
+        <span class="mk">돈</span>
+        <b>우리 가게가 받을 수 있는 <br>지원금 확인</b>
+        <span class="mt">1분 셀프 체크</span>
+        <a class="btn btn-gold btn-wide" href="/hub/p/check" data-menu="money">지원금 바로 확인</a>
+      </div>
+      <div class="menu">
+        <span class="mk">보험·자산</span>
+        <b>있는 건 그대로 두고 <br>비어 있는 곳만 점검</b>
+        <span class="mt">무료 점검 상담</span>
+        <a class="btn btn-gold btn-wide" href="#apply" data-menu="insure">무료 점검 신청</a>
+      </div>
+      <div class="menu">
+        <span class="mk">사주</span>
+        <b>사주 무료 맛보기</b>
+        <span class="mt">무료 · 바로</span>
+        <a class="btn btn-gold btn-wide" href="/hub/p/saju" data-menu="saju">무료로 보기</a>
+      </div>
     </div>
   </div>
 </section>
@@ -627,6 +661,8 @@ footer a:hover{color:var(--gold-lt)}
     <h2 class="t">상담 전에 혼자 확인해 보셔도 됩니다</h2>
     <p class="lead">신청 없이 바로 써 보실 수 있는 것들입니다. 해 보시고 필요하면 그때 상담 신청하셔도 늦지 않습니다.</p>
 
+    <details class="more">
+    <summary>전체 도구 17개 펼쳐 보기</summary>
     <div class="tgroup">
       <div><h3>정책자금과 지원금</h3><p>사장님 곳간</p></div>
       <div class="tools">
@@ -671,7 +707,7 @@ footer a:hover{color:var(--gold-lt)}
           <span class="arrow">→</span>
         </a>
         <a class="tool" href="/hub/p/shorts_free">
-          <span><b>쇼츠 3개 10분 무료 진단</b><span class="meta">무료 · 하루 3건</span></span>
+          <span><b>쇼츠 3개 10분 무료 진단</b><span class="meta">무료 · 하루 5건</span></span>
           <span class="arrow">→</span>
         </a>
         <a class="tool" href="/hub/p/S-01">
@@ -718,6 +754,7 @@ footer a:hover{color:var(--gold-lt)}
         </a>
       </div>
     </div>
+    </details>
   </div>
 </section>
 
