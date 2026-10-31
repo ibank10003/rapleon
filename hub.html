@@ -321,6 +321,34 @@ footer a:hover{color:var(--gold-lt)}
 .spacer{display:none; height:72px}
 
 
+/* 첫 화면 받는 것 */
+.hero-grid{display:grid; grid-template-columns:1fr 380px; gap:56px; align-items:end}
+.hero-grid h1{font-size:clamp(30px,3.7vw,48px)}
+.get{border:1px solid var(--line-dk); padding:30px 30px 18px; background:rgba(0,0,0,.12)}
+.get-h{font-family:var(--serif); font-size:17px; color:var(--gold-lt); margin-bottom:10px}
+.get ol{margin:0; padding:0; counter-reset:g}
+.get li{list-style:none; counter-increment:g; display:grid; grid-template-columns:28px 1fr; padding:13px 0; border-bottom:1px solid var(--line-dk)}
+.get li:last-child{border-bottom:0}
+.get li::before{content:counter(g); font-family:var(--serif); color:var(--gold); grid-row:1 / span 2}
+.get li b{color:#f6f2e8; font-size:16px; font-weight:600}
+.get li span{font-size:13px; color:#8fa198}
+
+/* 02 해 드리는 것 표 */
+.dtable{margin-top:48px; border-top:1px solid var(--ink)}
+.drow{display:grid; grid-template-columns:1.1fr 1.6fr .9fr; gap:28px; padding:22px 0; border-bottom:1px solid var(--line); align-items:baseline}
+.drow p{font-size:15px; color:var(--body)}
+.dhead{padding:14px 0}
+.dhead span{font-size:12.5px; font-weight:700; color:var(--gold-ink); letter-spacing:.04em}
+.pain-c{font-family:var(--serif); font-weight:600; color:var(--ink) !important; font-size:16.5px !important}
+.get-c{font-weight:700; color:var(--green) !important}
+.get-c::before{content:"→ "; color:var(--gold)}
+.dsum{background:var(--green); padding:24px 24px; margin-top:-1px}
+.dsum p{color:#c4cfc8}
+.dsum .pain-c{color:#f6f2e8 !important}
+.dsum .get-c{color:var(--gold-lt) !important}
+.wcard .gv{display:block; margin-top:10px; font-size:13px; font-weight:600; color:var(--green-3)}
+.wcard:hover .gv{color:#f6f2e8}
+
 /* 01 불편 꺼내기 */
 .pains{display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:48px; border-top:1px solid var(--line); border-left:1px solid var(--line)}
 .pain{
@@ -347,20 +375,6 @@ footer a:hover{color:var(--gold-lt)}
 .link-row .a,.link-row .b{font-family:var(--serif); font-weight:600; font-size:18px; color:var(--ink)}
 .link-row .ar{color:var(--gold); font-size:18px}
 .link-row p{font-size:15.5px; color:var(--muted)}
-
-/* 03 해결 방식 */
-.solve{display:grid; grid-template-columns:repeat(5,1fr); margin-top:52px; border-top:1px solid var(--ink)}
-.sv{padding:30px 24px 8px 0; border-right:1px solid var(--line)}
-.sv + .sv{padding-left:24px}
-.sv:last-child{border-right:0}
-.sv .no{display:block; font-family:var(--serif); font-size:28px; color:var(--gold); line-height:1; margin-bottom:18px}
-.sv h3{font-size:18px; margin-bottom:10px}
-.sv p{font-size:14.5px; color:var(--muted)}
-.feel{margin-top:56px; background:var(--green); padding:36px 40px; color:#d9e0db}
-.feel-h{font-family:var(--serif); font-size:18px; color:var(--gold-lt); margin-bottom:18px}
-.feel ul{display:grid; grid-template-columns:repeat(2,1fr); column-gap:40px}
-.feel li{list-style:none; padding:12px 0; border-bottom:1px solid var(--line-dk); font-size:15.5px; display:flex; gap:12px}
-.feel li::before{content:"“"; font-family:var(--serif); color:var(--gold-lt)}
 
 /* 05 결과표 */
 .sheet{margin-top:52px; background:var(--white); border:1px solid var(--line); padding:36px 40px 30px; position:relative}
@@ -433,6 +447,17 @@ footer a:hover{color:var(--gold-lt)}
   .sheet{padding:28px 20px 22px}
   #worry .worry{grid-template-columns:1fr}
 }
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr; gap:40px}
+  .drow{grid-template-columns:1fr; gap:6px}
+  .dhead{display:none}
+}
+@media (max-width:760px){
+  .get{padding:22px 20px 10px}
+  .dsum{padding:20px}
+  .wcard .gv{grid-column:1}
+}
 </style>
 </head>
 <body>
@@ -450,18 +475,29 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </header>
 
-<!-- ============ HERO : 후크 (철학 1장) ============ -->
+<!-- ============ HERO : 무엇을 해 주는지 먼저 (철학 1·16장) ============ -->
 <section class="hero" id="top">
-  <div class="wrap">
-    <p class="kicker">LIFE PLAN LAB</p>
-    <h1 id="heroTitle">혼자 다 챙기다<br>꼭 <em>하나씩 놓칩니다</em></h1>
-    <p class="sub" id="heroSub">본업, 직원, 세금, 매출, 마케팅, 건강, 보험, 대출, 노후.<br><strong>전부 다 해드리겠다는 곳이 아닙니다.</strong> 놓치는 게 없도록 정리하고, 때가 되면 먼저 알려드립니다.</p>
-
-    <div class="cta-row">
-      <a class="btn btn-gold" href="#apply">내 관리 순서 무료로 받기</a>
-      <a class="link" href="#pain">먼저 읽어 보기 ↓</a>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">LIFE PLAN LAB</p>
+      <h1 id="heroTitle">사장님이 혼자 챙기던 일,<br><em>한 장으로 정리해 드립니다</em></h1>
+      <p class="sub" id="heroSub">보험, 대출, 세금, 정책자금, 건강검진, 노후.<br>무료 상담 한 번으로 <strong>지금 상태와 무엇부터 할지</strong>를 정리해 드리고, 그다음부터는 때가 되면 저희가 먼저 알려드립니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#apply">무료로 정리받기</a>
+        <a class="link" href="#do">무엇을 해 주는지 보기 ↓</a>
+      </div>
+      <p class="note">상담 비용 0원 · 가입 권유 없음 · 카카오톡으로만 진행 가능 · 잘하고 계신 건 그대로</p>
     </div>
-    <p class="note">상담 비용 0원 · 가입 권유 없음 · 카카오톡으로만 진행 가능</p>
+    <div class="get">
+      <p class="get-h">무료 상담으로 받아 가시는 것</p>
+      <ol>
+        <li><b>관리 순서표</b><span>무엇부터, 왜 그 순서인지</span></li>
+        <li><b>내 보험 정리표</b><span>겹치는 것과 비어 있는 곳</span></li>
+        <li><b>받을 수 있는 자금 목록</b><span>정책자금·지원금과 신청 순서</span></li>
+        <li><b>대출 정리표</b><span>지금 조건과 확인할 점</span></li>
+        <li><b>1년 챙길 일 달력</b><span>세금, 만기, 검진 시기</span></li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -492,10 +528,58 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ 02 왜 놓치나 (철학 11장) : 따로 물어보면 관계는 아무도 안 본다 ============ -->
-<section class="sec alt">
+<!-- ============ 02 구체적으로 해 드리는 것 (철학 1·10·16장) ============ -->
+<section class="sec alt" id="do">
   <div class="wrap">
-    <div class="eyebrow"><i>02</i>왜 하나씩 놓치게 되나</div>
+    <div class="eyebrow"><i>02</i>구체적으로 해 드리는 것</div>
+    <h2 class="t">그래서 저희가 무엇을 해 드리냐면</h2>
+    <p class="lead">다 해 드린다고 하지 않습니다. 저희가 할 수 있는 일은 직접 하고, 못 하는 일은 잘하는 사람에게 연결합니다. 끝나면 손에 쥐는 것이 남습니다.</p>
+
+    <div class="dtable">
+      <div class="drow dhead"><span>사장님이 겪는 불편</span><span>저희가 하는 일</span><span>손에 쥐는 것</span></div>
+      <div class="drow">
+        <p class="pain-c">보험이 몇 개인지, 뭐가 겹치는지 모르겠다</p>
+        <p>가입된 보험을 전부 모아 한 장에 펼칩니다. 겹치는 것과 비어 있는 곳만 표시합니다.</p>
+        <p class="get-c">내 보험 정리표</p>
+      </div>
+      <div class="drow">
+        <p class="pain-c">받을 수 있는 정책자금·지원금을 찾을 시간이 없다</p>
+        <p>업종, 지역, 업력으로 받을 수 있는 자금을 찾고, 신청 순서와 필요한 서류를 정리합니다.</p>
+        <p class="get-c">받을 수 있는 자금 목록과 신청 순서</p>
+      </div>
+      <div class="drow">
+        <p class="pain-c">지금 대출 조건이 괜찮은 건지 모르겠다</p>
+        <p>대출별 금리, 만기, 상환 방식을 한 장에 정리하고, 더 나은 조건을 알아볼 여지가 있는지 확인합니다.</p>
+        <p class="get-c">대출 정리표</p>
+      </div>
+      <div class="drow">
+        <p class="pain-c">세금 낼 때, 보험 만기, 검진 시기를 자꾸 놓친다</p>
+        <p>사장님의 1년 일정을 뽑아 두고, 때가 되면 저희가 먼저 연락드립니다.</p>
+        <p class="get-c">1년 챙길 일 달력과 알림</p>
+      </div>
+      <div class="drow">
+        <p class="pain-c">노후를 언제부터 얼마나 준비해야 할지 모르겠다</p>
+        <p>지금 소득과 준비 상태로 필요한 금액과 시작 시점을 계산합니다.</p>
+        <p class="get-c">노후 준비 계산표</p>
+      </div>
+      <div class="drow">
+        <p class="pain-c">세무, 법률, 보험금 문제를 누구에게 물어야 할지 모르겠다</p>
+        <p>사안에 맞는 세무사, 변호사, 손해사정사를 연결하고 같이 확인합니다. 모르는 건 언제까지 알려드릴지 약속합니다.</p>
+        <p class="get-c">맞는 전문가 연결</p>
+      </div>
+      <div class="drow dsum">
+        <p class="pain-c">무엇부터 해야 할지 모르겠다</p>
+        <p>위의 것들을 따로 보지 않고 이어서 봅니다. 건강, 보장, 사업 자금, 노후, 투자 가운데 사장님에게 맞는 순서를 정합니다.</p>
+        <p class="get-c">관리 순서표 한 장</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 왜 놓치나 (철학 11장) : 따로 물어보면 관계는 아무도 안 본다 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow"><i>03</i>왜 하나씩 놓치게 되나</div>
     <h2 class="t">따로 물어보면,<br>서로 이어진 부분은 아무도 보지 않습니다</h2>
     <p class="lead">보험은 설계사에게, 대출은 은행에, 세금은 세무사에게 물으면 각자 자기 분야의 답을 줍니다. 그런데 사장님의 일들은 서로 이어져 있습니다.</p>
 
@@ -509,34 +593,6 @@ footer a:hover{color:var(--gold-lt)}
     </div>
 
     <div class="quote">그래서 저희의 차이는 서비스 개수가 아닙니다. 서비스 사이의 관계를 읽고, 사장님에게 맞는 순서를 정해 드리는 것입니다.</div>
-  </div>
-</section>
-
-<!-- ============ 03 해결 방식 (철학 1·16장) ============ -->
-<section class="sec">
-  <div class="wrap">
-    <div class="eyebrow"><i>03</i>저희가 하는 일</div>
-    <h2 class="t">다 해 드린다고 하지 않습니다.<br>대신 이렇게 덜어 드립니다</h2>
-
-    <div class="solve">
-      <div class="sv"><span class="no">1</span><h3>정리합니다</h3><p>흩어져 있는 보험, 대출, 세금, 건강 정보를 한 장으로 모읍니다.</p></div>
-      <div class="sv"><span class="no">2</span><h3>순서를 정합니다</h3><p>무엇부터 해야 하는지, 왜 그 순서인지 설명드립니다.</p></div>
-      <div class="sv"><span class="no">3</span><h3>직접 처리합니다</h3><p>저희가 할 수 있는 일은 저희가 직접 합니다.</p></div>
-      <div class="sv"><span class="no">4</span><h3>전문가를 연결합니다</h3><p>세무사, 변호사, 손해사정사, 병원처럼 저희가 못 하는 일은 잘하는 사람에게 연결해 드립니다.</p></div>
-      <div class="sv"><span class="no">5</span><h3>먼저 알려드립니다</h3><p>세금 시기, 보험 만기, 건강검진, 정책자금 공고. 때가 되면 저희가 먼저 연락드립니다.</p></div>
-    </div>
-
-    <div class="feel">
-      <p class="feel-h">상담을 마친 분이 이렇게 느끼시도록 일합니다</p>
-      <ul>
-        <li>여기저기 알아보는 시간이 줄었다</li>
-        <li>내가 놓친 부분을 찾아 준다</li>
-        <li>무엇부터 해야 할지 정리된다</li>
-        <li>문제가 생기면 누구에게 연락할지 고민하지 않아도 된다</li>
-        <li>필요할 때 먼저 알려 준다</li>
-        <li>잘하고 있는 건 괜히 바꾸라고 하지 않는다</li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -750,36 +806,42 @@ footer a:hover{color:var(--gold-lt)}
         <span class="ico">事業</span>
         <b>사업이 힘들다</b>
         <span class="d">정책자금·지원금, 자금 흐름, 직원, 세금, 마케팅</span>
+        <span class="gv">받는 것: 받을 수 있는 자금 목록과 신청 순서</span>
         <span class="go">여기서 시작 →</span>
       </a>
       <a class="wcard" href="#apply" data-worry="건강">
         <span class="ico">健康</span>
         <b>건강이 걱정된다</b>
         <span class="d">건강검진, 병원, 보장 점검</span>
+        <span class="gv">받는 것: 검진 시기와 보장 빈 곳 정리</span>
         <span class="go">여기서 시작 →</span>
       </a>
       <a class="wcard" href="#apply" data-worry="돈">
         <span class="ico">資金</span>
         <b>돈이 걱정된다</b>
         <span class="d">보험료, 저축, 투자 순서</span>
+        <span class="gv">받는 것: 보험 정리표와 저축·투자 순서</span>
         <span class="go">여기서 시작 →</span>
       </a>
       <a class="wcard" href="#apply" data-worry="집">
         <span class="ico">住居</span>
         <b>집 문제가 있다</b>
         <span class="d">대출, 전세, 매수</span>
+        <span class="gv">받는 것: 대출 정리표</span>
         <span class="go">여기서 시작 →</span>
       </a>
       <a class="wcard" href="#apply" data-worry="노후">
         <span class="ico">老後</span>
         <b>노후가 걱정된다</b>
         <span class="d">연금, 상속, 증여</span>
+        <span class="gv">받는 것: 노후 준비 계산표</span>
         <span class="go">여기서 시작 →</span>
       </a>
       <a class="wcard wcard-all" href="#apply" data-worry="모름">
         <span class="ico">全體</span>
         <b>뭐부터 해야 할지 모르겠다</b>
         <span class="d">전체를 한 번에 보고 순서부터 정합니다</span>
+        <span class="gv">받는 것: 관리 순서표 한 장</span>
         <span class="go">여기서 시작 →</span>
       </a>
     </div>
@@ -901,7 +963,7 @@ footer a:hover{color:var(--gold-lt)}
         <input type="hidden" name="src" id="f_src" value="direct">
         <input type="hidden" name="page" value="hub">
 
-        <button type="submit" class="btn btn-green btn-wide" id="submitBtn">내 관리 순서 받기</button>
+        <button type="submit" class="btn btn-green btn-wide" id="submitBtn">무료로 정리받기</button>
         <p class="formnote">신청하시면 <b>내 보험 5분 점검 체크리스트</b>를 바로 받으실 수 있고,<br>영업일 기준 24시간 안에 연락드립니다.</p>
       </form>
 
