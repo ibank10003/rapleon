@@ -80,7 +80,7 @@ header{
 .nav-cta:hover{background:var(--green); color:#fff}
 
 /* hero */
-.hero{background:var(--green); color:#c4cfc8; padding:112px 0 0; position:relative; overflow:hidden}
+.hero{background:var(--green); color:#c4cfc8; padding:112px 0 104px; position:relative; overflow:hidden}
 .hero::before{
   content:"金"; position:absolute; right:-40px; top:20px; font-family:var(--serif); font-weight:700;
   font-size:min(52vw,560px); line-height:1; color:rgba(212,185,138,.045); pointer-events:none;
@@ -115,13 +115,6 @@ header{
   display:grid; grid-template-columns:repeat(4,1fr); margin-top:84px;
   border-top:1px solid var(--line-dk);
 }
-.hero{padding-bottom:112px}
-.menus{display:grid; grid-template-columns:repeat(3,1fr); margin-top:64px; border-top:1px solid var(--line-dk); border-left:1px solid var(--line-dk)}
-.menu{display:flex; flex-direction:column; padding:28px 24px 26px; border-right:1px solid var(--line-dk); border-bottom:1px solid var(--line-dk)}
-.menu .mk{font-size:12.5px; font-weight:700; letter-spacing:.06em; color:var(--gold-lt)}
-.menu b{display:block; font-family:var(--serif); font-weight:600; font-size:19px; line-height:1.45; color:#f6f2e8; margin:14px 0 6px; letter-spacing:-.03em}
-.menu .mt{font-size:13px; color:#8fa198; margin-bottom:24px}
-.menu .btn{margin-top:auto; padding:14px 16px; font-size:15px}
 .more{margin-top:44px; border-top:1px solid var(--ink)}
 .more > summary{cursor:pointer; list-style:none; padding:22px 0; font-weight:600; color:var(--ink); display:flex; justify-content:space-between; border-bottom:1px solid var(--line)}
 .more > summary::-webkit-details-marker{display:none}
@@ -327,6 +320,62 @@ footer a:hover{color:var(--gold-lt)}
 .fixed .btn{padding:14px 20px; font-size:15.5px}
 .spacer{display:none; height:72px}
 
+
+/* 01 불편 꺼내기 */
+.pains{display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:48px; border-top:1px solid var(--line); border-left:1px solid var(--line)}
+.pain{
+  font-family:inherit; font-size:16px; font-weight:600; color:var(--ink); background:var(--white); cursor:pointer;
+  border:0; border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:26px 18px; text-align:left;
+  min-height:96px; transition:background .15s,color .15s; position:relative;
+}
+.pain small{display:block; font-size:12px; font-weight:500; color:var(--muted); margin-top:4px}
+.pain::after{content:""; position:absolute; right:16px; top:18px; width:14px; height:14px; border:1px solid var(--line)}
+.pain.on{background:var(--green); color:#f6f2e8}
+.pain.on small{color:#a9b9b0}
+.pain.on::after{border-color:var(--gold-lt); background:var(--gold-lt); box-shadow:inset 0 0 0 3px var(--green)}
+.pain:focus-visible{outline:2px solid var(--gold); outline-offset:-2px}
+.tally{display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center; margin-top:40px; padding:32px 0; border-top:1px solid var(--ink); border-bottom:1px solid var(--line)}
+.tally-n{display:flex; align-items:baseline; gap:10px; white-space:nowrap}
+.tally-n b{font-family:var(--serif); font-size:64px; font-weight:600; color:var(--gold); line-height:1}
+.tally-n span{font-size:17px; color:var(--ink); font-weight:600}
+.tally-t{font-size:16px; color:var(--body)}
+.tally-t strong{color:var(--ink)}
+
+/* 02 이어진 것들 */
+.chain{margin-top:48px; border-top:1px solid var(--ink)}
+.link-row{display:grid; grid-template-columns:150px 30px 170px 1fr; align-items:baseline; gap:12px; padding:22px 0; border-bottom:1px solid var(--line)}
+.link-row .a,.link-row .b{font-family:var(--serif); font-weight:600; font-size:18px; color:var(--ink)}
+.link-row .ar{color:var(--gold); font-size:18px}
+.link-row p{font-size:15.5px; color:var(--muted)}
+
+/* 03 해결 방식 */
+.solve{display:grid; grid-template-columns:repeat(5,1fr); margin-top:52px; border-top:1px solid var(--ink)}
+.sv{padding:30px 24px 8px 0; border-right:1px solid var(--line)}
+.sv + .sv{padding-left:24px}
+.sv:last-child{border-right:0}
+.sv .no{display:block; font-family:var(--serif); font-size:28px; color:var(--gold); line-height:1; margin-bottom:18px}
+.sv h3{font-size:18px; margin-bottom:10px}
+.sv p{font-size:14.5px; color:var(--muted)}
+.feel{margin-top:56px; background:var(--green); padding:36px 40px; color:#d9e0db}
+.feel-h{font-family:var(--serif); font-size:18px; color:var(--gold-lt); margin-bottom:18px}
+.feel ul{display:grid; grid-template-columns:repeat(2,1fr); column-gap:40px}
+.feel li{list-style:none; padding:12px 0; border-bottom:1px solid var(--line-dk); font-size:15.5px; display:flex; gap:12px}
+.feel li::before{content:"“"; font-family:var(--serif); color:var(--gold-lt)}
+
+/* 05 결과표 */
+.sheet{margin-top:52px; background:var(--white); border:1px solid var(--line); padding:36px 40px 30px; position:relative}
+.sheet::before{content:""; position:absolute; left:0; top:0; right:0; height:3px; background:var(--green)}
+.sheet-h{display:flex; justify-content:space-between; align-items:baseline; gap:20px; flex-wrap:wrap; padding-bottom:20px}
+.sheet-h span{font-size:12.5px; font-weight:700; color:var(--gold-ink); letter-spacing:.04em}
+.sheet-h b{font-family:var(--serif); font-weight:600; font-size:22px; color:var(--ink)}
+.sheet .order{margin-top:0}
+.sheet .oitem:last-child{border-bottom:0}
+.sheet-f{margin-top:8px; padding-top:18px; border-top:1px dashed var(--line); font-size:14px; color:var(--muted)}
+
+/* 10 선택 */
+#worry .worry{grid-template-columns:repeat(3,1fr)}
+.wcard-all{background:var(--ivory)}
+
 @media (max-width:960px){
   .apply-grid,.faq-grid,.founder,.mgrid{grid-template-columns:1fr; gap:40px}
   .tgroup{grid-template-columns:1fr; gap:14px}
@@ -337,7 +386,7 @@ footer a:hover{color:var(--gold-lt)}
   body{font-size:16px}
   .wrap{padding:0 20px}
   .sec{padding:72px 0}
-  .hero{padding-top:72px}
+  .hero{padding:72px 0 64px}
   .chips{grid-template-columns:1fr 1fr; margin-top:56px}
   .chip{padding:18px 0 20px 18px}
   .chip:nth-child(odd){padding-left:0}
@@ -362,13 +411,27 @@ footer a:hover{color:var(--gold-lt)}
   .spacer{display:block}
   .cta-row{gap:20px}
   .cta-row .btn{width:100%}
-  .hero{padding-bottom:72px}
-  .menus{grid-template-columns:1fr; margin-top:44px}
-  .menu{padding:22px 20px}
-  .menu b br{display:none}
 }
-@media (min-width:761px) and (max-width:960px){
-  .menus{grid-template-columns:1fr 1fr}
+
+@media (max-width:960px){
+  .pains{grid-template-columns:repeat(3,1fr)}
+  .solve{grid-template-columns:1fr 1fr}
+  .sv,.sv + .sv{padding:26px 20px 18px 0; border-right:0; border-bottom:1px solid var(--line)}
+  .sv:nth-child(even){padding-left:20px; border-left:1px solid var(--line)}
+}
+@media (max-width:760px){
+  .pains{grid-template-columns:1fr 1fr}
+  .pain{min-height:76px; padding:20px 16px; font-size:15px}
+  .tally{grid-template-columns:1fr; gap:14px}
+  .tally-n b{font-size:52px}
+  .link-row{grid-template-columns:auto 22px 1fr; row-gap:4px}
+  .link-row p{grid-column:1 / -1}
+  .solve{grid-template-columns:1fr}
+  .sv:nth-child(even){padding-left:0; border-left:0}
+  .feel{padding:28px 20px}
+  .feel ul{grid-template-columns:1fr}
+  .sheet{padding:28px 20px 22px}
+  #worry .worry{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -387,40 +450,100 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO : 후크 (철학 1장) ============ -->
 <section class="hero" id="top">
   <div class="wrap">
     <p class="kicker">LIFE PLAN LAB</p>
-    <h1 id="heroTitle">내 고민 하나 고르면<br><em>무료로 먼저 해 드려요</em></h1>
+    <h1 id="heroTitle">혼자 다 챙기다<br>꼭 <em>하나씩 놓칩니다</em></h1>
+    <p class="sub" id="heroSub">본업, 직원, 세금, 매출, 마케팅, 건강, 보험, 대출, 노후.<br><strong>전부 다 해드리겠다는 곳이 아닙니다.</strong> 놓치는 게 없도록 정리하고, 때가 되면 먼저 알려드립니다.</p>
 
-    <!-- 메뉴 4개 · 메뉴마다 무료 행동 버튼 1개 (나머지 링크는 08 도구 섹션에 접어 둠) -->
-    <div class="menus">
-      <div class="menu">
-        <span class="mk">콘텐츠</span>
-        <b>내 영상으로 쇼츠 3개 <br>무료 진단</b>
-        <span class="mt">10분 · 하루 5건</span>
-        <a class="btn btn-gold btn-wide" href="/hub/p/shorts_free" data-menu="content">무료 진단 신청</a>
-      </div>
-      <div class="menu">
-        <span class="mk">돈</span>
-        <b>우리 가게가 받을 수 있는 <br>지원금 확인</b>
-        <span class="mt">1분 셀프 체크</span>
-        <a class="btn btn-gold btn-wide" href="/hub/p/check" data-menu="money">지원금 바로 확인</a>
-      </div>
-      <div class="menu">
-        <span class="mk">보험·자산</span>
-        <b>있는 건 그대로 두고 <br>비어 있는 곳만 점검</b>
-        <span class="mt">무료 점검 상담</span>
-        <a class="btn btn-gold btn-wide" href="#apply" data-menu="insure">무료 점검 신청</a>
-      </div>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="#apply">내 관리 순서 무료로 받기</a>
+      <a class="link" href="#pain">먼저 읽어 보기 ↓</a>
+    </div>
+    <p class="note">상담 비용 0원 · 가입 권유 없음 · 카카오톡으로만 진행 가능</p>
+  </div>
+</section>
+
+<!-- ============ 01 불편 꺼내기 (철학 1·14장) : 저희가 문제를 정하지 않고, 사장님이 직접 누릅니다 ============ -->
+<section class="sec" id="pain">
+  <div class="wrap">
+    <div class="eyebrow"><i>01</i>사장님이 혼자 챙기는 것들</div>
+    <h2 class="t">지금 혼자 챙기고 계신 걸<br>눌러 보세요</h2>
+    <p class="lead">저희가 먼저 문제를 정해 드리지 않습니다. 사장님이 이미 신경 쓰고 계신 것부터 세어 보시면 됩니다.</p>
+
+    <div class="pains" id="pains">
+      <button type="button" class="pain">본업</button>
+      <button type="button" class="pain">직원 관리</button>
+      <button type="button" class="pain">세금</button>
+      <button type="button" class="pain">매출</button>
+      <button type="button" class="pain">마케팅</button>
+      <button type="button" class="pain">건강</button>
+      <button type="button" class="pain">보험</button>
+      <button type="button" class="pain">주택·대출</button>
+      <button type="button" class="pain">노후 준비</button>
+      <button type="button" class="pain">전문가 찾기<small>세무사·변호사·손해사정사·병원</small></button>
+    </div>
+
+    <div class="tally">
+      <p class="tally-n"><b id="painN">0</b><span>가지를 혼자 챙기고 계십니다</span></p>
+      <p class="tally-t">하나하나는 다 하실 수 있는 일입니다.<br>문제는 <strong>각각 잘하는 사람을 따로 찾아다니는 데 드는 시간과 신경</strong>입니다.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ 3가지 약속 (철학 3장·41장) ============ -->
+<!-- ============ 02 왜 놓치나 (철학 11장) : 따로 물어보면 관계는 아무도 안 본다 ============ -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="eyebrow"><i>02</i>왜 하나씩 놓치게 되나</div>
+    <h2 class="t">따로 물어보면,<br>서로 이어진 부분은 아무도 보지 않습니다</h2>
+    <p class="lead">보험은 설계사에게, 대출은 은행에, 세금은 세무사에게 물으면 각자 자기 분야의 답을 줍니다. 그런데 사장님의 일들은 서로 이어져 있습니다.</p>
+
+    <div class="chain">
+      <div class="link-row"><span class="a">건강</span><span class="ar">→</span><span class="b">보험</span><p>몸 상태가 달라지면 들 수 있는 보험이 달라집니다.</p></div>
+      <div class="link-row"><span class="a">보험</span><span class="ar">→</span><span class="b">자산</span><p>보장이 비어 있으면 치료비를 모아 둔 돈에서 쓰게 됩니다.</p></div>
+      <div class="link-row"><span class="a">자산의 안전</span><span class="ar">→</span><span class="b">저축·투자</span><p>안전이 먼저 서야 저축과 투자의 순서가 정해집니다.</p></div>
+      <div class="link-row"><span class="a">사업</span><span class="ar">→</span><span class="b">대출·현금흐름</span><p>매출이 흔들리면 대출과 생활비가 같이 흔들립니다.</p></div>
+      <div class="link-row"><span class="a">소득</span><span class="ar">→</span><span class="b">노후</span><p>지금 버는 방식이 노후 준비의 시기와 금액을 정합니다.</p></div>
+      <div class="link-row"><span class="a">집 계획</span><span class="ar">→</span><span class="b">대출·자산배분</span><p>집을 사거나 옮길 계획이 대출과 돈의 배분을 바꿉니다.</p></div>
+    </div>
+
+    <div class="quote">그래서 저희의 차이는 서비스 개수가 아닙니다. 서비스 사이의 관계를 읽고, 사장님에게 맞는 순서를 정해 드리는 것입니다.</div>
+  </div>
+</section>
+
+<!-- ============ 03 해결 방식 (철학 1·16장) ============ -->
 <section class="sec">
   <div class="wrap">
-    <div class="eyebrow"><i>01</i>우리가 지키는 세 가지</div>
+    <div class="eyebrow"><i>03</i>저희가 하는 일</div>
+    <h2 class="t">다 해 드린다고 하지 않습니다.<br>대신 이렇게 덜어 드립니다</h2>
+
+    <div class="solve">
+      <div class="sv"><span class="no">1</span><h3>정리합니다</h3><p>흩어져 있는 보험, 대출, 세금, 건강 정보를 한 장으로 모읍니다.</p></div>
+      <div class="sv"><span class="no">2</span><h3>순서를 정합니다</h3><p>무엇부터 해야 하는지, 왜 그 순서인지 설명드립니다.</p></div>
+      <div class="sv"><span class="no">3</span><h3>직접 처리합니다</h3><p>저희가 할 수 있는 일은 저희가 직접 합니다.</p></div>
+      <div class="sv"><span class="no">4</span><h3>전문가를 연결합니다</h3><p>세무사, 변호사, 손해사정사, 병원처럼 저희가 못 하는 일은 잘하는 사람에게 연결해 드립니다.</p></div>
+      <div class="sv"><span class="no">5</span><h3>먼저 알려드립니다</h3><p>세금 시기, 보험 만기, 건강검진, 정책자금 공고. 때가 되면 저희가 먼저 연락드립니다.</p></div>
+    </div>
+
+    <div class="feel">
+      <p class="feel-h">상담을 마친 분이 이렇게 느끼시도록 일합니다</p>
+      <ul>
+        <li>여기저기 알아보는 시간이 줄었다</li>
+        <li>내가 놓친 부분을 찾아 준다</li>
+        <li>무엇부터 해야 할지 정리된다</li>
+        <li>문제가 생기면 누구에게 연락할지 고민하지 않아도 된다</li>
+        <li>필요할 때 먼저 알려 준다</li>
+        <li>잘하고 있는 건 괜히 바꾸라고 하지 않는다</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 원칙 (철학 3·13장) : 리스크 제거 ============ -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="eyebrow"><i>04</i>우리가 지키는 원칙</div>
     <h2 class="t">저희는 바꾸라는 말부터 하지 않습니다</h2>
     <p class="lead">상담을 받으면 뭔가 해지하고 다시 가입해야 할 것 같아 부담스러우셨다면, 여기서는 그런 일이 없습니다.</p>
 
@@ -441,94 +564,58 @@ footer a:hover{color:var(--gold-lt)}
         <p>병이 달라지고, 의료비가 오르고, 사업과 집 계획이 바뀝니다. 지금 괜찮아도 변할 때 다시 알려드립니다.</p>
       </div>
     </div>
+
+    <div class="quote">순서는 저희가 제안하지만, 선택은 사장님이 하십니다. 원하지 않으시면 설득하지 않고 기록만 남겨 두었다가, 상황이 바뀌면 그때 다시 여쭙겠습니다.</div>
   </div>
 </section>
 
-<!-- ============ 고민 선택 (철학 36장) ============ -->
-<section class="sec alt" id="worry">
-  <div class="wrap">
-    <div class="eyebrow"><i>02</i>무엇부터 보면 되는지</div>
-    <h2 class="t">상품 이름 대신,<br>지금 걸리는 고민부터 고르세요</h2>
-    <p class="lead">보험상담, 대출상담, 연금상담처럼 상품 이름으로 나눠 놓지 않았습니다. 요즘 가장 마음에 걸리는 것 하나만 고르시면 됩니다.</p>
-
-    <div class="worry">
-      <a class="wcard" href="#apply" data-worry="사업">
-        <span class="ico">事業</span>
-        <b>사업이 힘들다</b>
-        <span class="d">자금, 직원, 세금</span>
-        <span class="go">고르기 →</span>
-      </a>
-      <a class="wcard" href="#apply" data-worry="건강">
-        <span class="ico">健康</span>
-        <b>건강이 걱정된다</b>
-        <span class="d">검진, 병원, 보장</span>
-        <span class="go">고르기 →</span>
-      </a>
-      <a class="wcard" href="#apply" data-worry="돈">
-        <span class="ico">資金</span>
-        <b>돈이 걱정된다</b>
-        <span class="d">저축, 투자, 보험료</span>
-        <span class="go">고르기 →</span>
-      </a>
-      <a class="wcard" href="#apply" data-worry="집">
-        <span class="ico">住居</span>
-        <b>집 문제가 있다</b>
-        <span class="d">대출, 전세, 매수</span>
-        <span class="go">고르기 →</span>
-      </a>
-      <a class="wcard" href="#apply" data-worry="노후">
-        <span class="ico">老後</span>
-        <b>노후가 걱정된다</b>
-        <span class="d">연금, 상속, 증여</span>
-        <span class="go">고르기 →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 관리 순서 (철학 9·12·39장) ============ -->
+<!-- ============ 05 결과물 (철학 9·12·39장) ============ -->
 <section class="sec">
   <div class="wrap">
-    <div class="eyebrow"><i>03</i>상담 결과로 받으시는 것</div>
+    <div class="eyebrow"><i>05</i>상담 결과로 받으시는 것</div>
     <h2 class="t">고르게 하지 않습니다.<br>순서를 정해 드립니다</h2>
     <p class="lead">무엇부터 해야 할지 몰라서 오시는 경우가 대부분입니다. 그래서 서비스 목록을 보여드리고 고르라고 하지 않습니다. 상담이 끝나면 사장님 상황에 맞는 관리 순서 한 장을 받아 가십니다.</p>
 
-    <div class="order">
-      <div class="oitem">
-        <div class="num">1</div>
-        <h4>건강 관리</h4>
-        <p>검진 시기가 지났는지, 지금 몸 상태 때문에 나중에 못 하게 되는 준비가 있는지 먼저 봅니다.</p>
+    <div class="sheet">
+      <div class="sheet-h"><span>관리 순서표 예시</span><b>사장님은 지금 이 순서로 관리하세요</b></div>
+      <div class="order">
+        <div class="oitem">
+          <div class="num">1</div>
+          <h4>건강 관리</h4>
+          <p>검진 시기가 지났는지, 지금 몸 상태 때문에 나중에 못 하게 되는 준비가 있는지 먼저 봅니다.</p>
+        </div>
+        <div class="oitem">
+          <div class="num">2</div>
+          <h4>보장 점검</h4>
+          <p>자산은 먼저 안전해야 합니다. 지금 있는 것 중 중복은 없는지, 비어 있는 곳은 어디인지 확인합니다.</p>
+        </div>
+        <div class="oitem">
+          <div class="num">3</div>
+          <h4>사업 자금과 대출</h4>
+          <p>운영 자금 흐름과 대출 조건, 받을 수 있는 정책자금이 있는지 같이 봅니다.</p>
+        </div>
+        <div class="oitem">
+          <div class="num">4</div>
+          <h4>노후와 상속 준비</h4>
+          <p>언제부터 얼마가 필요한지, 자녀에게 넘길 때 세금은 어떻게 되는지 미리 계산합니다.</p>
+        </div>
+        <div class="oitem">
+          <div class="num">5</div>
+          <h4>투자</h4>
+          <p>앞의 것들이 정리된 다음입니다. 순서를 건너뛰면 가장 먼저 손실이 나는 자리입니다.</p>
+        </div>
       </div>
-      <div class="oitem">
-        <div class="num">2</div>
-        <h4>보장 점검</h4>
-        <p>자산은 먼저 안전해야 합니다. 지금 있는 것 중 중복은 없는지, 비어 있는 곳은 어디인지 확인합니다.</p>
-      </div>
-      <div class="oitem">
-        <div class="num">3</div>
-        <h4>사업 자금과 대출</h4>
-        <p>운영 자금 흐름과 대출 조건, 받을 수 있는 정책자금이 있는지 같이 봅니다.</p>
-      </div>
-      <div class="oitem">
-        <div class="num">4</div>
-        <h4>노후와 상속 준비</h4>
-        <p>언제부터 얼마가 필요한지, 자녀에게 넘길 때 세금은 어떻게 되는지 미리 계산합니다.</p>
-      </div>
-      <div class="oitem">
-        <div class="num">5</div>
-        <h4>투자</h4>
-        <p>앞의 것들이 정리된 다음입니다. 순서를 건너뛰면 가장 먼저 손실이 나는 자리입니다.</p>
-      </div>
+      <p class="sheet-f">순위마다 왜 먼저인지, 지금 상태, 유지할 것, 확인할 것, 보완할 것, 오늘 할 일을 함께 적어 드립니다.</p>
     </div>
 
     <div class="quote">이 순서는 기본값입니다. 건강 상태나 가입 가능성 때문에 순서를 바꿔야 하는 분도 있습니다. 왜 이 순서인지는 반드시 설명드립니다.</div>
   </div>
 </section>
 
-<!-- ============ 상담 흐름 (철학 14·15장) ============ -->
+<!-- ============ 06 상담 흐름 (철학 14·15장) ============ -->
 <section class="sec dark">
   <div class="wrap">
-    <div class="eyebrow"><i>04</i>상담은 이렇게 진행됩니다</div>
+    <div class="eyebrow"><i>06</i>상담은 이렇게 진행됩니다</div>
     <h2 class="t">문제를 저희가 정하지 않습니다</h2>
     <p class="lead">이게 문제입니다, 이대로 두면 큰일 납니다 같은 말은 하지 않습니다. 사장님이 이미 느끼고 계신 불편을 먼저 찾습니다.</p>
 
@@ -562,10 +649,10 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ 대표 (철학 2·31·32장) ============ -->
+<!-- ============ 07 대표 (철학 2·31·32장) ============ -->
 <section class="sec">
   <div class="wrap">
-    <div class="eyebrow"><i>05</i>누가 상담해 드리나</div>
+    <div class="eyebrow"><i>07</i>누가 상담해 드리나</div>
     <h2 class="t">책으로만 배운 사람은 아닙니다</h2>
 
     <div class="founder">
@@ -589,10 +676,10 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ 멤버십 (철학 4·5·6장) ============ -->
+<!-- ============ 08 멤버십 (철학 4·5·6장) ============ -->
 <section class="sec dark">
   <div class="wrap">
-    <div class="eyebrow"><i>06</i>상담이 끝난 다음</div>
+    <div class="eyebrow"><i>08</i>상담이 끝난 다음</div>
     <h2 class="t">기억하는 일은 저희가 맡겠습니다</h2>
     <p class="lead">세금 시기, 자동차보험 만기, 건강검진, 정책자금 공고. 사장님이 매번 달력을 보지 않아도 되도록 저희가 대신 보고 있다가 때가 되면 알려드립니다.</p>
 
@@ -616,17 +703,17 @@ footer a:hover{color:var(--gold-lt)}
         <span class="tag">준비 중 · 사전 신청 접수</span>
         <div class="price">월 1만 원<small>대</small></div>
         <p class="cmp">직원 한 명을 쓰면 월급과 4대보험, 관리 비용까지 월 300만 원 이상입니다.<br>챙겨야 할 일을 대신 기억하는 역할만 두는 비용입니다.</p>
-        <a class="btn btn-green btn-wide" href="#apply">사전 신청하기</a>
+        <a class="btn btn-green btn-wide" href="#apply" data-worry-pre="멤버십">사전 신청하기</a>
         <p class="fine">구성과 가격은 확정 시 안내드립니다. 사전 신청하셔도 비용은 발생하지 않습니다.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 공간 (철학 18~21장) ============ -->
+<!-- ============ 09 공간 (철학 18~21장) ============ -->
 <section class="sec alt">
   <div class="wrap">
-    <div class="eyebrow"><i>07</i>사무실</div>
+    <div class="eyebrow"><i>09</i>사무실</div>
     <h2 class="t">상담이 없어도 그냥 들르셔도 됩니다</h2>
     <p class="lead">딱딱한 금융 상담실이 아닙니다. 차 한잔하고 수다 떨다 가셔도 되고, 업무 이야기를 꼭 하지 않으셔도 됩니다. 다만 상담이 시작되면 누구보다 꼼꼼하게 준비합니다.</p>
 
@@ -651,15 +738,192 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ 도구 (기존 hub 전량 이관) ============ -->
-<section class="sec">
+<!-- ============ 10 선택 (철학 12·36장) : 고민 이름으로만 고르고, 모든 길은 같은 진단으로 ============ -->
+<section class="sec" id="worry">
   <div class="wrap">
-    <div class="eyebrow"><i>08</i>지금 바로 해 볼 수 있는 것</div>
-    <h2 class="t">상담 전에 혼자 확인해 보셔도 됩니다</h2>
-    <p class="lead">신청 없이 바로 써 보실 수 있는 것들입니다. 해 보시고 필요하면 그때 상담 신청하셔도 늦지 않습니다.</p>
+    <div class="eyebrow"><i>10</i>시작할 곳 고르기</div>
+    <h2 class="t">이제 어디서부터 시작할지만<br>고르시면 됩니다</h2>
+    <p class="lead">상품 이름이 아니라 지금 가장 마음에 걸리는 것 하나만 고르시면 됩니다. 어느 것을 고르셔도 받으시는 건 같습니다. 사장님 상황에 맞춘 관리 순서 한 장입니다.</p>
+
+    <div class="worry">
+      <a class="wcard" href="#apply" data-worry="사업">
+        <span class="ico">事業</span>
+        <b>사업이 힘들다</b>
+        <span class="d">정책자금·지원금, 자금 흐름, 직원, 세금, 마케팅</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+      <a class="wcard" href="#apply" data-worry="건강">
+        <span class="ico">健康</span>
+        <b>건강이 걱정된다</b>
+        <span class="d">건강검진, 병원, 보장 점검</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+      <a class="wcard" href="#apply" data-worry="돈">
+        <span class="ico">資金</span>
+        <b>돈이 걱정된다</b>
+        <span class="d">보험료, 저축, 투자 순서</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+      <a class="wcard" href="#apply" data-worry="집">
+        <span class="ico">住居</span>
+        <b>집 문제가 있다</b>
+        <span class="d">대출, 전세, 매수</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+      <a class="wcard" href="#apply" data-worry="노후">
+        <span class="ico">老後</span>
+        <b>노후가 걱정된다</b>
+        <span class="d">연금, 상속, 증여</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+      <a class="wcard wcard-all" href="#apply" data-worry="모름">
+        <span class="ico">全體</span>
+        <b>뭐부터 해야 할지 모르겠다</b>
+        <span class="d">전체를 한 번에 보고 순서부터 정합니다</span>
+        <span class="go">여기서 시작 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 신청 ============ -->
+<section class="sec" id="apply">
+  <div class="wrap apply-grid">
+    <div class="apply-side">
+      <div class="eyebrow"><i>11</i>신청</div>
+      <h2 class="t">1분이면 됩니다</h2>
+      <p class="lead">한 분씩 꼼꼼히 보느라 주간 상담 인원을 정해 두고 받고 있습니다. 신청하신다고 바로 뭔가 결정하실 필요는 없습니다.</p>
+      <ul>
+        <li>상담 비용 0원</li>
+        <li>가입 권유 없음</li>
+        <li>카카오톡으로만 진행 가능</li>
+        <li>영업일 기준 24시간 안에 연락</li>
+      </ul>
+    </div>
+
+    <div class="formcard">
+      <form id="leadForm" novalidate>
+        <div class="two">
+          <div class="field">
+            <label for="f_name">이름 <span class="req">*</span></label>
+            <input type="text" id="f_name" name="name" autocomplete="name" placeholder="홍길동">
+            <div class="err" id="e_name">이름을 입력해 주세요.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_phone">연락처 <span class="req">*</span></label>
+            <input type="tel" id="f_phone" name="phone" autocomplete="tel" placeholder="010-0000-0000" inputmode="numeric">
+            <div class="err" id="e_phone">휴대폰 번호를 정확히 입력해 주세요.</div>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="f_age">연령대 <span class="req">*</span></label>
+            <select id="f_age" name="age">
+              <option value="">선택해 주세요</option>
+              <option>20대</option><option>30대</option><option>40대</option>
+              <option>50대</option><option>60대 이상</option>
+            </select>
+            <div class="err" id="e_age">연령대를 선택해 주세요.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_status">현재 상황 <span class="req">*</span></label>
+            <select id="f_status" name="status">
+              <option value="">선택해 주세요</option>
+              <option>자영업자</option><option>법인 대표</option><option>직장인</option>
+              <option>전문직</option><option>주부</option><option>은퇴 또는 은퇴 준비</option><option>기타</option>
+            </select>
+            <div class="err" id="e_status">현재 상황을 선택해 주세요.</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>지금 가장 걸리는 고민 <span class="req">*</span> <span class="opt-note">여러 개 선택 가능</span></label>
+          <div class="opts" id="worryOpts">
+            <label class="opt"><input type="checkbox" name="worry" value="사업"><span>사업이 힘들다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="건강"><span>건강이 걱정된다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="돈"><span>돈이 걱정된다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="집"><span>집 문제가 있다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="노후"><span>노후가 걱정된다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="상속"><span>상속과 증여</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="모름"><span>뭐부터 해야 할지 모르겠다</span></label>
+            <label class="opt"><input type="checkbox" name="worry" value="멤버십"><span>멤버십 사전 신청</span></label>
+          </div>
+          <div class="err" id="e_worry">한 가지 이상 선택해 주세요.</div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label>편한 연락 방법</label>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="contact" value="카카오톡" checked><span>카카오톡</span></label>
+              <label class="opt"><input type="radio" name="contact" value="전화"><span>전화</span></label>
+              <label class="opt"><input type="radio" name="contact" value="문자"><span>문자</span></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f_time">연락 가능한 시간</label>
+            <select id="f_time" name="time">
+              <option>언제든</option>
+              <option>오전 9시에서 12시</option>
+              <option>오후 12시에서 18시</option>
+              <option>저녁 18시에서 21시</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f_memo">미리 알려주실 내용 <span class="opt-note">선택</span></label>
+          <textarea id="f_memo" name="memo" rows="3" placeholder="상호나 업종, 궁금한 점을 적어주시면 준비해서 연락드립니다."></textarea>
+        </div>
+
+        <div class="agree">
+          <label><input type="checkbox" id="f_privacy"> <span>[필수] 개인정보 수집과 이용에 동의합니다.</span></label>
+          <details>
+            <summary>내용 보기</summary>
+            <table>
+              <tr><th>수집 항목</th><td>이름, 연락처, 연령대, 현재 상황, 고민 분야, 연락 방법과 시간, 메모</td></tr>
+              <tr><th>이용 목적</th><td>상담 진행 및 결과 안내</td></tr>
+              <tr><th>보유 기간</th><td>상담 종료 후 1년, 삭제 요청 시 즉시 파기</td></tr>
+            </table>
+            <p class="fine">동의를 거부하실 수 있으나, 거부 시 상담 신청이 제한됩니다.</p>
+          </details>
+          <div class="err" id="e_privacy">개인정보 수집과 이용에 동의해 주세요.</div>
+        </div>
+
+        <div class="agree" style="padding-bottom:20px">
+          <label><input type="checkbox" id="f_marketing"> <span>[선택] 정보 안내(문자, 카카오톡) 수신에 동의합니다.</span></label>
+        </div>
+
+        <input type="hidden" name="src" id="f_src" value="direct">
+        <input type="hidden" name="page" value="hub">
+
+        <button type="submit" class="btn btn-green btn-wide" id="submitBtn">내 관리 순서 받기</button>
+        <p class="formnote">신청하시면 <b>내 보험 5분 점검 체크리스트</b>를 바로 받으실 수 있고,<br>영업일 기준 24시간 안에 연락드립니다.</p>
+      </form>
+
+      <div id="done">
+        <div class="ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3>신청이 접수되었습니다</h3>
+        <p><b id="doneName"></b>님, 곧 <b id="doneVia">카카오톡</b>으로 먼저 연락드리겠습니다.<br>모르는 번호라도 꼭 확인 부탁드립니다.</p>
+        <a class="btn btn-gold btn-wide" id="pdfLink" href="/hub/insurance-5min-checklist.pdf">내 보험 5분 점검 체크리스트 받기 (PDF)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 혼자 먼저 볼 수 있는 것 (기존 hub 도구, 접어 둠) ============ -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="eyebrow"><i>12</i>상담 전에 혼자 먼저 보고 싶다면</div>
+    <h2 class="t">관리 순서 안에서 쓰는 도구들</h2>
+    <p class="lead">상담 뒤 관리 순서에 따라 함께 쓰게 되는 것들입니다. 먼저 혼자 해 보셔도 됩니다.</p>
 
     <details class="more">
-    <summary>전체 도구 14개 펼쳐 보기</summary>
+    <summary>도구 14개 펼쳐 보기</summary>
     <div class="tgroup">
       <div><h3>정책자금과 지원금</h3><p>사장님 곳간</p></div>
       <div class="tools">
@@ -738,140 +1002,11 @@ footer a:hover{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ 신청 ============ -->
-<section class="sec" id="apply">
-  <div class="wrap apply-grid">
-    <div class="apply-side">
-      <div class="eyebrow"><i>09</i>신청</div>
-      <h2 class="t">1분이면 됩니다</h2>
-      <p class="lead">한 분씩 꼼꼼히 보느라 주간 상담 인원을 정해 두고 받고 있습니다. 신청하신다고 바로 뭔가 결정하실 필요는 없습니다.</p>
-      <ul>
-        <li>상담 비용 0원</li>
-        <li>가입 권유 없음</li>
-        <li>카카오톡으로만 진행 가능</li>
-        <li>영업일 기준 24시간 안에 연락</li>
-      </ul>
-    </div>
-
-    <div class="formcard">
-      <form id="leadForm" novalidate>
-        <div class="two">
-          <div class="field">
-            <label for="f_name">이름 <span class="req">*</span></label>
-            <input type="text" id="f_name" name="name" autocomplete="name" placeholder="홍길동">
-            <div class="err" id="e_name">이름을 입력해 주세요.</div>
-          </div>
-
-          <div class="field">
-            <label for="f_phone">연락처 <span class="req">*</span></label>
-            <input type="tel" id="f_phone" name="phone" autocomplete="tel" placeholder="010-0000-0000" inputmode="numeric">
-            <div class="err" id="e_phone">휴대폰 번호를 정확히 입력해 주세요.</div>
-          </div>
-        </div>
-
-        <div class="two">
-          <div class="field">
-            <label for="f_age">연령대 <span class="req">*</span></label>
-            <select id="f_age" name="age">
-              <option value="">선택해 주세요</option>
-              <option>20대</option><option>30대</option><option>40대</option>
-              <option>50대</option><option>60대 이상</option>
-            </select>
-            <div class="err" id="e_age">연령대를 선택해 주세요.</div>
-          </div>
-
-          <div class="field">
-            <label for="f_status">현재 상황 <span class="req">*</span></label>
-            <select id="f_status" name="status">
-              <option value="">선택해 주세요</option>
-              <option>자영업자</option><option>법인 대표</option><option>직장인</option>
-              <option>전문직</option><option>주부</option><option>은퇴 또는 은퇴 준비</option><option>기타</option>
-            </select>
-            <div class="err" id="e_status">현재 상황을 선택해 주세요.</div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>지금 가장 걸리는 고민 <span class="req">*</span> <span class="opt-note">여러 개 선택 가능</span></label>
-          <div class="opts" id="worryOpts">
-            <label class="opt"><input type="checkbox" name="worry" value="사업"><span>사업이 힘들다</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="건강"><span>건강이 걱정된다</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="돈"><span>돈이 걱정된다</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="집"><span>집 문제가 있다</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="노후"><span>노후가 걱정된다</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="상속"><span>상속과 증여</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="멤버십"><span>멤버십 사전 신청</span></label>
-            <label class="opt"><input type="checkbox" name="worry" value="자동화"><span>콘텐츠와 자동화</span></label>
-          </div>
-          <div class="err" id="e_worry">한 가지 이상 선택해 주세요.</div>
-        </div>
-
-        <div class="two">
-          <div class="field">
-            <label>편한 연락 방법</label>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="contact" value="카카오톡" checked><span>카카오톡</span></label>
-              <label class="opt"><input type="radio" name="contact" value="전화"><span>전화</span></label>
-              <label class="opt"><input type="radio" name="contact" value="문자"><span>문자</span></label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="f_time">연락 가능한 시간</label>
-            <select id="f_time" name="time">
-              <option>언제든</option>
-              <option>오전 9시에서 12시</option>
-              <option>오후 12시에서 18시</option>
-              <option>저녁 18시에서 21시</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="f_memo">미리 알려주실 내용 <span class="opt-note">선택</span></label>
-          <textarea id="f_memo" name="memo" rows="3" placeholder="상호나 업종, 궁금한 점을 적어주시면 준비해서 연락드립니다."></textarea>
-        </div>
-
-        <div class="agree">
-          <label><input type="checkbox" id="f_privacy"> <span>[필수] 개인정보 수집과 이용에 동의합니다.</span></label>
-          <details>
-            <summary>내용 보기</summary>
-            <table>
-              <tr><th>수집 항목</th><td>이름, 연락처, 연령대, 현재 상황, 고민 분야, 연락 방법과 시간, 메모</td></tr>
-              <tr><th>이용 목적</th><td>상담 진행 및 결과 안내</td></tr>
-              <tr><th>보유 기간</th><td>상담 종료 후 1년, 삭제 요청 시 즉시 파기</td></tr>
-            </table>
-            <p class="fine">동의를 거부하실 수 있으나, 거부 시 상담 신청이 제한됩니다.</p>
-          </details>
-          <div class="err" id="e_privacy">개인정보 수집과 이용에 동의해 주세요.</div>
-        </div>
-
-        <div class="agree" style="padding-bottom:20px">
-          <label><input type="checkbox" id="f_marketing"> <span>[선택] 정보 안내(문자, 카카오톡) 수신에 동의합니다.</span></label>
-        </div>
-
-        <input type="hidden" name="src" id="f_src" value="direct">
-        <input type="hidden" name="page" value="hub">
-
-        <button type="submit" class="btn btn-green btn-wide" id="submitBtn">신청 완료하기</button>
-        <p class="formnote">신청하시면 <b>내 보험 5분 점검 체크리스트</b>를 바로 받으실 수 있고,<br>영업일 기준 24시간 안에 연락드립니다.</p>
-      </form>
-
-      <div id="done">
-        <div class="ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-        <h3>신청이 접수되었습니다</h3>
-        <p><b id="doneName"></b>님, 곧 <b id="doneVia">카카오톡</b>으로 먼저 연락드리겠습니다.<br>모르는 번호라도 꼭 확인 부탁드립니다.</p>
-        <a class="btn btn-gold btn-wide" id="pdfLink" href="/hub/insurance-5min-checklist.pdf">내 보험 5분 점검 체크리스트 받기 (PDF)</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ FAQ ============ -->
-<section class="sec alt">
+<section class="sec">
   <div class="wrap faq-grid">
     <div>
-      <div class="eyebrow"><i>10</i>자주 묻는 질문</div>
+      <div class="eyebrow"><i>13</i>자주 묻는 질문</div>
       <h2 class="t">궁금하신 것들</h2>
     </div>
 
@@ -1082,6 +1217,26 @@ footer a:hover{color:var(--gold-lt)}
       });
     });
   }
+})();
+</script>
+<script>
+/* 01 불편 꺼내기: 누른 개수 세기, 멤버십 버튼은 신청서에 미리 체크 */
+(function(){
+  var n = document.getElementById("painN");
+  document.querySelectorAll("#pains .pain").forEach(function(b){
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click", function(){
+      var on = b.classList.toggle("on");
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      n.textContent = document.querySelectorAll("#pains .pain.on").length;
+    });
+  });
+  document.querySelectorAll("[data-worry-pre]").forEach(function(a){
+    a.addEventListener("click", function(){
+      var box = document.querySelector('#worryOpts input[value="' + a.getAttribute("data-worry-pre") + '"]');
+      if (box) box.checked = true;
+    });
+  });
 })();
 </script>
 
