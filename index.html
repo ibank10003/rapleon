@@ -369,7 +369,8 @@ const MATERIALS = {
   inherit:   { name: "부모님 집 상속 준비 점검표",  file: "inherit-checklist.pdf",      download: "상속-준비-점검표.pdf" },
   salary:    { name: "연봉협상 준비 체크리스트",    file: "salary-checklist.pdf",       download: "연봉협상-준비-체크리스트.pdf" },
   jeonse:    { name: "전세계약 체크리스트",         file: "jeonse-checklist.pdf",       download: "전세계약-체크리스트.pdf" },
-  fraud:     { name: "금융사기 예방 체크리스트",    file: "fraud-checklist.pdf",        download: "금융사기-예방-체크리스트.pdf" }
+  fraud:     { name: "금융사기 예방 체크리스트",    file: "fraud-checklist.pdf",        download: "금융사기-예방-체크리스트.pdf" },
+  taxprep:   { name: "연말정산 준비 체크리스트",    file: "taxprep-checklist.pdf",      download: "연말정산-준비-체크리스트.pdf" }
 };
 
 /* 댓글 키워드·광고별 첫 화면 문구
@@ -526,6 +527,15 @@ const VARIANTS = {
     cta: "금융사기 예방 체크리스트 받기",
     customerType: "",
     interests: ["전체 자산 진단", "연금·노후"]
+  },
+  연말정산준비: {
+    match: ["taxprep"],
+    material: "taxprep",
+    title: '연말정산,<br>잘 받는 사람들은<br><span class="hl">연말 전에</span> 합니다',
+    sub: '미리보기·카드 비율·부양가족·연금저축/IRP까지 <b>연말정산 준비 체크리스트</b>로 12월 31일 전에 확인하세요. 연금저축·IRP를 얼마나 더 넣을지는 무료 점검에서 내 숫자로 같이 계산해 드립니다.',
+    cta: "연말정산 준비 체크리스트 받기",
+    customerType: "직장인",
+    interests: ["절세", "연금·노후"]
   }
 };
 /* ========================================================= */
