@@ -168,6 +168,12 @@
   .follow p { font-size: 15px; margin: 0 0 10px; color: var(--text); font-weight: 700; }
   .follow .tip { font-size: 14px; font-weight: 500; color: var(--text-sub); margin: 10px 0 0; }
   .follow .tip a { color: var(--brand); font-weight: 700; }
+  .follow .lead { font-weight: 500; color: var(--text-sub); font-size: 14px; }
+  .yn { padding: 12px 0; border-top: 1px solid var(--line); }
+  .yn:first-of-type { border-top: 0; padding-top: 0; }
+  .yn p { margin-bottom: 8px; }
+  .worry.more { border-style: dashed; background: transparent; padding: 12px 18px; }
+  .worry.more b { font-size: 16px; }
   .picked { background: #f3f7ff; border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--text); margin-bottom: 18px; }
   .picked a { color: var(--brand); font-size: 14px; margin-left: 6px; }
   .member { background: #fff; border: 2px solid var(--line); border-radius: 18px; padding: 22px 20px; }
@@ -196,9 +202,8 @@
     <p>하나만 고르셔도 됩니다. 나머지는 이야기 나누면서 같이 살펴봐요.</p>
     <div class="worries" id="worries"></div>
     <div class="follow" id="follow" hidden>
-      <p id="followQ"></p>
-      <div class="chips" id="followChips"></div>
-      <p class="tip" id="followTip" hidden></p>
+      <p class="lead">아는 만큼만 눌러 주세요. 건너뛰어도 신청할 수 있어요.</p>
+      <div id="followQs"></div>
       <a class="btn" href="#apply" id="followCta" style="margin-top:14px">이 고민으로 상담 신청하기</a>
     </div>
   </div>
@@ -353,7 +358,7 @@
 /* =========================================================
    여기만 바꾸면 됩니다
    금융 상담용이라 index.html 과 같은 구글 시트에 저장합니다. (숏폼 신청은 shorts.html → 별도 시트)
-   고민·세부 고민·멤버십 관심은 시트의 "관심 분야" 칸에 한 줄로 합쳐 저장됩니다.
+   고민·예/아니오 답·멤버십 관심은 시트의 "관심 분야" 칸에 한 줄로 합쳐 저장됩니다.
    ========================================================= */
 const CONFIG = {
   endpoint: "https://script.google.com/macros/s/AKfycbz9JrwVnvoTp1d5WyNgaC2pYA0xaECmnD8MfjfbHX4SLEtGeCJFbV8BvlfxBGvrJoGQ/exec",
@@ -365,26 +370,60 @@ const CONFIG = {
 };
 
 /* 고민 메뉴: 상품 이름이 아니라 고객의 고민 이름으로.
-   follow 는 고른 뒤 한 번 더 묻는 질문 (선택 안 해도 신청 가능).
-   tip 이 있는 답은 고르면 안내 문구를 보여줌 */
+   기준: docs/LPL_고민메뉴_진단트리_확정안_2026-10-31.md (프로젝트 파일)
+   qs 는 고른 뒤 묻는 예/아니오 질문 (답하지 않아도 신청 가능). s 는 시트에 남는 짧은 이름.
+   tip 이 있는 답을 고르면 그 질문 아래에 안내 문구를 보여줌.
+   group 은 이어지는 서비스 묶음 (지금은 화면에 안 씀, 결과 화면 단계에서 사용) */
+const KEEP_INSURANCE = "지금 가입한 보험은 해지하지 말고 그대로 두세요. 상담에서 무엇을 지켜주는지부터 같이 확인해 드립니다.";
 const WORRIES = [
-  { key: "사업", icon: "🏪", title: "사업이 힘들다", desc: "매출, 자금, 직원, 홍보",
-    q: "어느 쪽이 가장 신경 쓰이세요?",
-    follow: ["매출·현금흐름", "사업 자금 마련", "세금·직원 관리", "가게 홍보"],
-    tips: { "가게 홍보": '유튜브 영상이 있다면 <a href="shorts.html?src=care">숏폼 제작 무료 샘플</a>도 받아보실 수 있어요. 금융 상담과는 별개 서비스입니다.' } },
-  { key: "건강", icon: "🩺", title: "건강이 걱정된다", desc: "검진, 보장, 보험금 청구",
-    q: "지금 상황에 가까운 걸 골라 주세요.",
-    follow: ["검진을 한동안 못 받았다", "지금 보험으로 충분한지 모르겠다", "보험금 청구 중이다"] },
-  { key: "돈", icon: "💸", title: "돈이 걱정된다", desc: "저축, 보험료, 대출",
-    q: "어떤 게 가장 불편하세요?",
-    follow: ["돈이 잘 안 모인다", "보험료가 부담된다", "대출이 여러 개다"] },
-  { key: "집", icon: "🏠", title: "집 문제가 있다", desc: "내 집 마련, 전세, 대출 갈아타기",
-    q: "어떤 계획이 있으세요?",
-    follow: ["집을 사려고 한다", "전세를 옮기려고 한다", "주택담보대출 갈아타기"] },
-  { key: "노후", icon: "🌱", title: "노후가 걱정된다", desc: "연금, 은퇴, 물려주기",
-    q: "어느 쪽이 궁금하세요?",
-    follow: ["연금을 얼마 받을지 모른다", "은퇴 시기를 준비하고 싶다", "자녀에게 물려주는 것"] }
+  { key: "사업", icon: "🏪", title: "사업이 힘들다", desc: "매출, 자금, 직원, 홍보", group: "매장 지키기",
+    qs: [
+      { s: "매출 감소", q: "최근 6개월 매출이 전보다 줄었나요?" },
+      { s: "사업자금 필요", q: "운영자금이나 사업자 대출이 필요하거나 이미 있으신가요?" },
+      { s: "직원 있음", q: "함께 일하는 직원이 있나요?" },
+      { s: "홍보 고민", q: "가게 홍보가 고민이신가요?",
+        tip: { "예": '유튜브 영상이 있다면 <a href="shorts.html?src=care">숏폼 제작 무료 샘플</a>도 받아보실 수 있어요. 금융 상담과는 별개 서비스입니다.' } }
+    ] },
+  { key: "건강", icon: "🩺", title: "건강이 걱정된다", desc: "검진, 보장, 보험금 청구", group: "건강",
+    qs: [
+      { s: "치료·약 복용", q: "지금 치료 중이거나 꾸준히 드시는 약이 있나요?", tip: { "예": KEEP_INSURANCE } },
+      { s: "가족력", q: "부모님·형제 중 큰 병을 앓은 분이 있나요?" },
+      { s: "청구 이슈", q: "보험금을 청구 중이거나, 거절된 적이 있나요?" },
+      { s: "보험료 부담", q: "보험료가 지금 형편에 비해 부담되시나요?" }
+    ] },
+  { key: "돈", icon: "💸", title: "돈이 걱정된다", desc: "저축, 보험료, 대출", group: "금융",
+    qs: [
+      { s: "저축 됨", q: "매달 조금이라도 저축이 되고 있나요?" },
+      { s: "보험료 부담", q: "보험료가 부담되시나요?" },
+      { s: "대출 부담", q: "대출이 3건 이상이거나, 매달 이자가 부담되시나요?" },
+      { s: "지출 파악", q: "돈이 매달 어디로 나가는지 대략 알고 계신가요?" }
+    ] },
+  { key: "집", icon: "🏠", title: "집 문제가 있다", desc: "내 집 마련, 전세, 대출 갈아타기", group: "금융",
+    qs: [
+      { s: "무주택", q: "지금 집이 없으신가요(무주택)?" },
+      { s: "1년 내 계획", q: "1년 안에 집을 사거나 이사할 계획이 있으신가요?" },
+      { s: "주택·전세대출", q: "주택담보대출이나 전세대출이 있으신가요?" },
+      { s: "이자 부담", q: "금리가 올라서 이자가 부담되시나요?" }
+    ] },
+  { key: "노후", icon: "🌱", title: "노후가 걱정된다", desc: "연금, 은퇴, 물려주기", group: "개인 노후",
+    qs: [
+      { s: "개인연금", q: "국민연금 말고 따로 준비한 연금이 있나요?" },
+      { s: "생활비 계산", q: "은퇴 후 매달 필요한 생활비를 생각해 보신 적 있나요?" },
+      { s: "물려주기", q: "자녀에게 물려주거나 도와줄 계획이 있나요?" }
+    ] },
+  // 고민을 못 고르는 분을 위한 전체 점검 (카드는 5개 아래에 작게)
+  { key: "전체", icon: "❓", title: "뭐부터 해야 할지 모르겠다", desc: "몇 가지만 답하면 전체를 같이 살펴봐요", more: true,
+    qs: [
+      { s: "2년 내 검진", q: "최근 2년 안에 건강검진을 받으셨나요?" },
+      { s: "치료·약 복용", q: "지금 치료 중이거나 꾸준히 드시는 약이 있나요?", tip: { "예": KEEP_INSURANCE } },
+      { s: "보장 앎", q: "지금 가입한 보험이 무엇을 보장하는지 대략 알고 계신가요?" },
+      { s: "대출 부담", q: "대출이 3건 이상이거나, 매달 이자가 부담되시나요?" },
+      { s: "비상금 3개월", q: "갑자기 수입이 끊겨도 3개월은 버틸 돈이 있으신가요?" },
+      { s: "1년 내 집 계획", q: "1년 안에 집을 사거나 이사할 계획이 있으신가요?" },
+      { s: "50세 이상·10년 내 은퇴", q: "50세 이상이시거나, 10년 안에 일을 줄일 생각이 있으신가요?" }
+    ] }
 ];
+const ANSWERS = ["예", "아니오", "잘 모르겠어요"];
 
 document.querySelectorAll("[data-c]").forEach(el => {
   const v = CONFIG[el.dataset.c];
@@ -415,12 +454,12 @@ const source = {
 };
 
 // 고민 메뉴 그리기
-const state = { worry: "", detail: "" };
+const state = { worry: "", answers: {} };
 const worriesEl = document.getElementById("worries");
 const select = document.getElementById("worrySelect");
 WORRIES.forEach(w => {
   const b = document.createElement("button");
-  b.type = "button"; b.className = "worry"; b.dataset.key = w.key; b.setAttribute("aria-pressed", "false");
+  b.type = "button"; b.className = w.more ? "worry more" : "worry"; b.dataset.key = w.key; b.setAttribute("aria-pressed", "false");
   b.innerHTML = `<span class="ico">${w.icon}</span><span><b></b><small></small></span>`;
   b.querySelector("b").textContent = w.title;
   b.querySelector("small").textContent = w.desc;
@@ -434,33 +473,43 @@ select.addEventListener("change", () => pickWorry(select.value, false));
 
 function pickWorry(key, fromCard) {
   const w = WORRIES.find(x => x.key === key);
-  state.worry = key; state.detail = "";
+  state.worry = key; state.answers = {};
   worriesEl.querySelectorAll(".worry").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.key === key)));
   select.value = key;
   const follow = document.getElementById("follow");
-  const tip = document.getElementById("followTip");
-  tip.hidden = true;
   if (!w) { follow.hidden = true; updatePicked(); return; }
-  document.getElementById("followQ").textContent = w.q;
-  const chips = document.getElementById("followChips");
-  chips.innerHTML = "";
-  w.follow.forEach(t => {
-    const l = document.createElement("label");
-    l.innerHTML = `<input type="radio" name="detail"><span></span>`;
-    l.querySelector("span").textContent = t;
-    l.querySelector("input").addEventListener("change", () => {
-      state.detail = t;
-      const html = w.tips && w.tips[t];
-      tip.hidden = !html;
-      if (html) tip.innerHTML = html;
-      updatePicked();
+  const box = document.getElementById("followQs");
+  box.innerHTML = "";
+  w.qs.forEach((item, i) => {
+    const row = document.createElement("div");
+    row.className = "yn";
+    row.innerHTML = `<p></p><div class="chips"></div><p class="tip" hidden></p>`;
+    row.querySelector("p").textContent = item.q;
+    const tip = row.querySelector(".tip");
+    ANSWERS.forEach(a => {
+      const l = document.createElement("label");
+      l.innerHTML = `<input type="radio" name="q${i}"><span></span>`;
+      l.querySelector("span").textContent = a;
+      l.querySelector("input").addEventListener("change", () => {
+        state.answers[item.s] = a;
+        const html = item.tip && item.tip[a];
+        tip.hidden = !html;
+        if (html) tip.innerHTML = html;
+        updatePicked();
+      });
+      row.querySelector(".chips").appendChild(l);
     });
-    chips.appendChild(l);
+    box.appendChild(row);
   });
   follow.hidden = false;
   if (fromCard) follow.scrollIntoView({ behavior: "smooth", block: "nearest" });
   form.querySelector('[data-f="worry"]').classList.remove("invalid");
   updatePicked();
+}
+
+// 시트에 남길 답: "매출 감소: 예, 직원 있음: 아니오"
+function answerText() {
+  return Object.entries(state.answers).map(([k, v]) => `${k}: ${v}`).join(", ");
 }
 
 // 신청서 맨 위에 고른 고민 표시 (고민을 고르면 선택 칸 대신 보여줌)
@@ -471,7 +520,8 @@ function updatePicked() {
   picked.hidden = !w;
   if (!w) return;
   picked.innerHTML = `고른 고민: <b></b> <a href="#worry">바꾸기</a>`;
-  picked.querySelector("b").textContent = w.title + (state.detail ? ` · ${state.detail}` : "");
+  const n = Object.keys(state.answers).length;
+  picked.querySelector("b").textContent = w.title + (n ? ` · 질문 ${n}개 답함` : "");
 }
 
 // 하단 고정 버튼: 고민 메뉴나 신청서가 보이면 숨김
@@ -523,7 +573,7 @@ form.addEventListener("submit", async (e) => {
     age: fd.get("age"),
     customerType: fd.get("customerType"),
     // 기존 시트 칸을 그대로 쓰기 위해 고민 정보를 관심 분야에 합쳐 보냄
-    interest: [`고민: ${w.title}`, state.detail && `세부: ${state.detail}`, membership && "멤버십 오픈 소식 희망"]
+    interest: [`고민: ${w.title}`, answerText() && `답: ${answerText()}`, membership && "멤버십 오픈 소식 희망"]
       .filter(Boolean).join(" / "),
     contact: fd.get("contact"),
     time: fd.get("time"),
