@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>무료 자산관리 상담 | 주유장 라이프플랜연구소</title>
 <meta name="description" content="보험·연금·투자·부동산·세금까지, 흩어진 내 자산을 한 번에 무료로 점검해 드립니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="주유장 라이프플랜연구소">
+<meta property="og:title" content="무료 자산관리 상담 | 주유장 라이프플랜연구소">
+<meta property="og:description" content="보험·연금·투자·부동산·세금까지, 흩어진 내 자산을 한 번에 무료로 점검해 드립니다.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -146,7 +150,24 @@
     font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4;
   }
   .areas div small { display: block; font-weight: 500; color: var(--text-sub); font-size: 13px; margin-top: 2px; }
+  .routes { display: grid; gap: 10px; margin-top: 16px; }
+  .routes a {
+    display: block; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 40px 16px 18px; color: var(--text); text-decoration: none; font-size: 15px; position: relative;
+  }
+  .routes a b { display: block; font-size: 17px; margin-bottom: 2px; }
+  .routes a span { color: var(--text-sub); }
+  .routes a::after { content: "→"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--brand); font-weight: 800; }
   .test-banner { background: #fff3cd; color: #7a5b00; font-size: 13px; text-align: center; padding: 8px; display: none; }
+  /* 상단 메뉴 (세 페이지 공통) */
+  .topnav { border-bottom: 1px solid var(--line); background: #fff; }
+  .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; }
+  .topnav .home { font-weight: 800; font-size: 15px; color: var(--text); text-decoration: none; white-space: nowrap; }
+  .topnav nav { display: flex; gap: 14px; }
+  .topnav nav a { font-size: 14px; font-weight: 700; color: var(--text-sub); text-decoration: none; white-space: nowrap; }
+  .topnav nav a[aria-current="page"] { color: var(--brand); }
+  footer .links { margin-bottom: 12px; }
+  footer .links a { color: var(--text-sub); margin: 0 6px; }
 </style>
 
 <!-- Meta 픽셀: CONFIG.metaPixelId 를 넣으면 자동으로 켜집니다 (아래 스크립트 참고) -->
@@ -154,14 +175,19 @@
 <body>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2570324423436600&ev=PageView&noscript=1"></noscript>
 <div class="test-banner" id="testBanner">테스트 모드: 구글 시트 주소가 아직 설정되지 않아 신청 내용이 저장되지 않습니다.</div>
+<header class="topnav">
+  <div class="wrap">
+    <a class="home" href="index.html">주유장 라이프플랜연구소</a>
+    <nav><a href="care.html">고민 상담</a><a href="shorts.html">숏폼 제작</a></nav>
+  </div>
+</header>
 
 <!-- 1. 후킹 + 표본 -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-c="brand">주유장 라이프플랜연구소</span>
     <h1 id="heroTitle">보험, 연금, 투자, 부동산, 세금…<br><span class="hl">따로따로 물어보고</span><br>계시진 않나요?</h1>
     <p class="sub" id="heroSub">흩어진 내 자산을 한 번에 모아 점검해 드립니다. 직장인부터 자영업자, 법인 대표님까지 <b>무료 자산관리 상담</b>을 받아보세요.</p>
-    <div class="seats"><span class="dot"></span><span>이번 주 무료 상담 가능 인원 <b data-c="seats">2</b>명 남음</span></div>
+    <div class="seats" hidden><span class="dot"></span><span>이번 주 무료 상담 가능 인원 <b data-c="seats">2</b>명 남음</span></div>
     <a class="btn" href="#apply" id="heroCta">무료 자산관리 상담 신청하기</a>
     <a class="dl" href="#apply" id="heroMaterial">📄 <span class="mName">내 보험 5분 점검 체크리스트</span> 무료로 받기</a>
     <p class="notice" style="margin-top:6px">아래 신청서를 남기시면 바로 받을 수 있어요.</p>
@@ -227,8 +253,8 @@
 <section id="apply">
   <div class="wrap">
     <h2>무료 자산관리 상담 신청</h2>
-    <p>자산관리는 <b>빨리 시작할수록</b> 선택지가 많아집니다. 한 분 한 분 꼼꼼히 보기 위해 주간 상담 인원을 정해서 받고 있습니다.</p>
-    <div class="seats"><span class="dot"></span><span>이번 주 남은 자리 <b data-c="seats">2</b>명</span></div>
+    <p>이름과 연락처만 남겨 주시면 편한 방법으로 먼저 연락드립니다. 상담만 받고 끝나셔도 됩니다.</p>
+    <div class="seats" hidden><span class="dot"></span><span>이번 주 남은 자리 <b data-c="seats">2</b>명</span></div>
 
     <div class="form-card">
       <form id="leadForm" novalidate>
@@ -319,15 +345,27 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <h2>이런 도움도 드려요</h2>
+    <div class="routes">
+      <a href="care.html?src=index"><b>무엇부터 챙길지 모르겠어요</b><span>상품 이름은 몰라도 됩니다. 고민 하나만 고르면 관리 순서를 정리해 드립니다.</span></a>
+      <a href="shorts.html?src=index"><b>가게 유튜브 영상이 있어요</b><span>찍어 둔 영상으로 쇼츠를 만들어 드립니다. 무료 샘플 1개부터.</span></a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
+    <p class="links"><a href="care.html">고민 상담</a>·<a href="shorts.html">숏폼 제작</a></p>
     <p data-c="footer">주유장 라이프플랜연구소</p>
     <p data-c="compliance">본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.</p>
+    <p data-c="registration">대출모집인·보험설계사 등록번호: (입력 예정)</p>
     <p data-c="reviewNo">광고심의필 번호: (심의 후 입력)</p>
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기 (남은 자리 <span data-c="seats">2</span>명)</a></div>
+<div class="sticky" id="sticky"><a class="btn" href="#apply">무료 상담 신청하기</a></div>
 
 <script>
 /* =========================================================
@@ -342,11 +380,12 @@ const CONFIG = {
   advisorIntro: "한 가지 상품만 권하지 않습니다. 보험부터 투자, 부동산, 세금까지 고객님의 자산 전체를 놓고, 지금 꼭 필요한 것과 하지 않아도 되는 것을 솔직하게 말씀드립니다.",
   advisorPhoto: "",          // 프로필 사진 주소 (비워두면 이름 첫 글자)
   youtubeId: "",             // 소개 영상 유튜브 ID (예: dQw4w9WgXcQ), 비워두면 숨김
-  seats: 2,                  // 희소성 문구 "남은 자리 N명"
+  seats: 0,                  // "남은 자리 N명" 표시. 0이면 숨김 (실제로 자리가 정해져 있을 때만 숫자를 넣으세요)
   interests: ["전체 자산 진단", "보험 점검", "연금·노후", "저축", "주식·펀드", "상속·증여", "절세", "부동산·대출", "자영업 자금", "법인 컨설팅"],
   kakaoChannelUrl: "",       // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
   footer: "주유장 라이프플랜연구소 · 대표 컨설턴트 주유장",
   compliance: "본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.",
+  registration: "",          // 예: "대출모집인 등록번호 0000-00000 · 보험설계사 등록번호 0000000000"
   reviewNo: "광고심의필 번호: (심의 후 입력)",
   metaPixelId: "2570324423436600"  // 메타 픽셀 ID (숫자), 비워두면 픽셀 미사용
 };
@@ -545,6 +584,7 @@ const VARIANTS = {
     l.querySelector("span").textContent = t;
     chips.appendChild(l);
   });
+  if (CONFIG.seats) document.querySelectorAll(".seats").forEach(el => { el.hidden = false; });
   if (!CONFIG.endpoint) document.getElementById("testBanner").style.display = "block";
 })();
 
