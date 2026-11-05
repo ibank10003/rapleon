@@ -325,7 +325,7 @@
   <div class="wrap">
     <p data-c="footer">주유장 라이프플랜연구소</p>
     <p data-c="compliance">본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.</p>
-    <p data-c="reviewNo">광고심의필 번호: (심의 후 입력)</p>
+    <p data-c="reviewNo" hidden></p>
   </div>
 </footer>
 
@@ -348,7 +348,7 @@ const CONFIG = {
   kakaoChannelUrl: "",       // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
   footer: "주유장 라이프플랜연구소 · 대표 컨설턴트 주유장",
   compliance: "본 페이지는 자산관리 상담 신청을 위한 안내이며, 특정 금융상품의 가입을 권유하지 않습니다. 투자 상품은 원금 손실이 발생할 수 있습니다.",
-  reviewNo: "광고심의필 번호: (심의 후 입력)",
+  reviewNo: "",   // 광고심의필 번호를 받으면 "광고심의필 번호: ○○○" 로 넣고 위 hidden 을 지운다
   metaPixelId: "2570324423436600"  // 메타 픽셀 ID (숫자), 비워두면 픽셀 미사용
 };
 
